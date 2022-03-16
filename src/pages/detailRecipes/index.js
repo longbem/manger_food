@@ -15,6 +15,11 @@ import useRequest from '@ahooksjs/use-request';
 import { stylesCommon } from '../../constants/stylesCommon';
 import { detailRecipes } from '../../apis/recipes';
 
+const imageNull =
+  'https://www.uaex.uada.edu/life-skills-wellness/food-nutrition/eating-well/EFNEP/images/Recipes-Banner.jpg';
+const avatarNull =
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTbAztm0T--l3uXW1xUGhbrZerEhU-JFaKDRQYrMusGzjQGjKkIdrG79S4_tYio-abW5Q&usqp=CAU';
+
 export const DetailRecipesScreen = () => {
   const route = useRoute();
   const { goBack } = useNavigation();
@@ -39,10 +44,13 @@ export const DetailRecipesScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView bounces={false}>
-        <FastImage source={{ uri: data.image }} style={styles.image} />
+        <FastImage
+          source={{ uri: data?.image || imageNull }}
+          style={styles.image}
+        />
         <View style={styles.viewContent}>
           <View style={[styles.row, styles.spaceBetween]}>
-            <Text style={styles.nameRecipes}>{data?.nameRecipes}</Text>
+            <Text style={styles.nameRecipes}>{data?.recipesName}</Text>
             <View style={styles.row}>
               <TouchableOpacity style={styles.btnAction}>
                 <AntDesign name="sharealt" size={20} color="#CAD3DD" />
@@ -57,9 +65,16 @@ export const DetailRecipesScreen = () => {
             </View>
           </View>
           <View style={[styles.row, styles.aliCenter, styles.viewAvatar]}>
-            <FastImage source={{ uri: data.image }} style={styles.avatar} />
-            <Text>{data?.nameUser}</Text>
+            <FastImage
+              source={{ uri: data?.image || avatarNull }}
+              style={styles.avatar}
+            />
+            <Text>{data?.userName}</Text>
           </View>
+          <Text style={styles.commentLabel}>Thành phần:</Text>
+          <Text>{data?.ingredients}</Text>
+          <Text style={styles.commentLabel}>Các bước:</Text>
+          <Text>{data?.steps}</Text>
           <Text style={styles.commentLabel}>Nhận xét:</Text>
           <TextInput
             placeholder="Viết nhận xét của bạn...!"
@@ -118,6 +133,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 30,
     marginRight: 10,
+    borderWidth: 1,
+    borderColor: '#CAD3DD',
   },
   viewAvatar: {
     marginTop: 20,

@@ -19,6 +19,7 @@ import { DetailCategoryScreen } from '../pages/detailCategory';
 import { SearchScreen } from '../pages/searchProducts';
 import { FavouriteRecipesScreen } from '../pages/favouriteRecipes';
 import { MyRecipesScreen } from '../pages/myRecipes';
+import { MyAccountScreen } from '../pages/myAccount';
 
 const Stack = createStackNavigator();
 
@@ -89,6 +90,13 @@ const MainStack = () => {
       <Stack.Screen
         name="myRecipesScreen"
         component={MyRecipesScreen}
+        options={{
+          title: 'Công thức của tôi',
+        }}
+      />
+      <Stack.Screen
+        name="myAccountScreen"
+        component={MyAccountScreen}
         options={{
           title: 'Công thức của tôi',
         }}

@@ -2,7 +2,9 @@ import React from 'react';
 import { View, TextInput, FlatList, StyleSheet, Text } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
+import useRequest from '@ahooksjs/use-request';
 import { stylesCommon } from '../../constants/stylesCommon';
+import { searchRecipes } from '../../apis/recipes';
 
 const SearchEmpty = () => {
   return (
@@ -16,12 +18,24 @@ const SearchEmpty = () => {
   );
 };
 export const SearchScreen = () => {
+  const [search, setSearch] = React.useState('');
+  const recipes = useRequest(searchRecipes, { manual: true });
   const data = [];
+
+  const onEndEditing = () => {
+    recipes.run(search);
+  };
+
   return (
     <View style={styles.container}>
       <View style={[styles.viewInput, styles.row]}>
         <AntDesign name="search1" size={20} style={styles.icon} />
-        <TextInput style={styles.input} placeholder="Nhập tên món ăn....!" />
+        <TextInput
+          style={styles.input}
+          placeholder="Nhập tên món ăn....!"
+          onEndEditing={onEndEditing}
+          onChangeText={text => setSearch(text)}
+        />
       </View>
       {data.length ? <FlatList /> : <SearchEmpty />}
     </View>

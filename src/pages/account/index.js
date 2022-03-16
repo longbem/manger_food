@@ -9,8 +9,12 @@ import {
 import { useNavigation } from '@react-navigation/core';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import FastImage from 'react-native-fast-image';
 import { stylesCommon } from '../../constants/stylesCommon';
 import { useAccountState } from '../../atoms/account';
+
+const avatarNull =
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTbAztm0T--l3uXW1xUGhbrZerEhU-JFaKDRQYrMusGzjQGjKkIdrG79S4_tYio-abW5Q&usqp=CAU';
 
 const ItemAccount = ({ label, icon, onPress, rightIcon }) => {
   return (
@@ -45,7 +49,7 @@ export const AccountScreen = () => {
       key: 'profile',
       name: 'Tài khoản của tôi',
       icon: 'user',
-      onPress: () => {},
+      onPress: () => navigate('myAccountScreen'),
     },
     {
       key: 'language',
@@ -82,8 +86,13 @@ export const AccountScreen = () => {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.viewUser}>
-        <EvilIcons name="user" size={120} color="#CAD3DD" />
-        <Text style={styles.guest}>Khách mời</Text>
+        <FastImage
+          style={styles.avatar}
+          source={{ uri: account?.avatar || avatarNull }}
+        />
+        <Text style={styles.guest}>
+          {account?.token ? account?.username : 'Khách mời'}
+        </Text>
       </View>
       {menuAccount.map(item => {
         if (
@@ -134,5 +143,12 @@ const styles = StyleSheet.create({
   viewItem: {
     marginHorizontal: 20,
     marginVertical: 10,
+  },
+  avatar: {
+    width: 90,
+    height: 90,
+    borderRadius: 50,
+    borderWidth: 0.5,
+    borderColor: '#CAD3DD',
   },
 });

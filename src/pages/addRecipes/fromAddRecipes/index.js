@@ -9,18 +9,34 @@ import {
 import { Input, FormControl, Select, Button, TextArea } from 'native-base';
 import { launchImageLibrary } from 'react-native-image-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import useRequest from '@ahooksjs/use-request';
 import { styles } from './styles';
+import { postRecipes } from '../../../apis/recipes';
+
+const paramsInfo = {
+  image: '',
+  recipesName: '',
+  category: '',
+  difficulty: '',
+  cuisine: '',
+  ingredients: '',
+  steps: '',
+  avatar: '',
+  userId: '',
+  userName: '',
+  createAt: new Date(),
+  updateAt: '',
+};
 
 export const FromAddRecipes = () => {
   const [isUpload, setUpload] = React.useState(false);
-  const [info, setInfo] = React.useState({
-    image: '',
-    nameRecipes: '',
-    category: '',
-    difficulty: '',
-    cuisine: '',
-    ingredients: '',
-    steps: '',
+  const [info, setInfo] = React.useState(paramsInfo);
+
+  const recipes = useRequest(postRecipes, {
+    manual: true,
+    onSuccess: response => {
+      console.log('response from add recipes', response);
+    },
   });
 
   const onSelectImage = async () => {
@@ -33,10 +49,12 @@ export const FromAddRecipes = () => {
   };
 
   const handleUpload = () => {
-    console.log('info', info);
     setUpload(true);
+    // recipes.run({ data: info });
     setTimeout(() => {
+      setInfo(paramsInfo);
       setUpload(false);
+      console.log('info', info);
     }, 2000);
   };
 
@@ -68,13 +86,13 @@ export const FromAddRecipes = () => {
         <FormControl.Label mt="3">Tên món ăn</FormControl.Label>
         <Input
           placeholder="Tên món ăn"
-          onChangeText={text => setInfo({ ...info, nameRecipes: text })}
+          onChangeText={text => setInfo({ ...info, recipesName: text })}
         />
         <FormControl.Label mt="3">Độ khó</FormControl.Label>
         <Select
           accessibilityLabel="Chọn độ khó món ăn"
           placeholder="Chọn độ khó món ăn"
-          onValueChange={text => setInfo({ ...info, difficulty: text })}>
+          onValueChange={value => setInfo({ ...info, difficulty: value })}>
           <Select.Item label="Dễ ràng" value="easy" />
           <Select.Item label="Trung bình" value="medium" />
           <Select.Item label="Khó" value="hard" />
@@ -83,7 +101,7 @@ export const FromAddRecipes = () => {
         <Select
           accessibilityLabel="Chọn thể loại"
           placeholder="Chọn thể loại"
-          onValueChange={text => setInfo({ ...info, category: text })}>
+          onValueChange={value => setInfo({ ...info, category: value })}>
           <Select.Item label="Cơm" value="easy" />
           <Select.Item label="Đồ nướng" value="medium" />
           <Select.Item label="Lẩu" value="hard" />
@@ -92,7 +110,7 @@ export const FromAddRecipes = () => {
         <Select
           accessibilityLabel="Chọn loại ẩm thực"
           placeholder="Chọn loại ẩm thực"
-          onValueChange={text => setInfo({ ...info, cuisine: text })}>
+          onValueChange={value => setInfo({ ...info, cuisine: value })}>
           <Select.Item label="Châu Á" value="chau_a" />
           <Select.Item label="Châu Âu" value="chau_au" />
           <Select.Item label="Châu Mỹ" value="chau_my" />

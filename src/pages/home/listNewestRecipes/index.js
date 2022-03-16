@@ -13,7 +13,10 @@ import useRequest from '@ahooksjs/use-request';
 import { stylesCommon } from '../../../constants/stylesCommon';
 import { getRecipes } from '../../../apis/recipes';
 
-const { width } = Dimensions.get('window');
+const imageNull =
+  'https://www.uaex.uada.edu/life-skills-wellness/food-nutrition/eating-well/EFNEP/images/Recipes-Banner.jpg';
+const avatarNull =
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTbAztm0T--l3uXW1xUGhbrZerEhU-JFaKDRQYrMusGzjQGjKkIdrG79S4_tYio-abW5Q&usqp=CAU';
 
 const ItemNewestRecipes = ({ item }) => {
   const { navigate } = useNavigation();
@@ -28,12 +31,18 @@ const ItemNewestRecipes = ({ item }) => {
       style={[styles.row, styles.viewItem]}
       key={item?.id}
       onPress={onDetail}>
-      <FastImage source={{ uri: item?.image }} style={styles.img} />
+      <FastImage
+        source={{ uri: item?.image || imageNull }}
+        style={styles.img}
+      />
       <View>
-        <Text style={styles.nameRecipes}>{item?.nameRecipes}</Text>
+        <Text style={styles.nameRecipes}>{item?.recipesName}</Text>
         <View style={[styles.row, styles.aliCenter]}>
-          <FastImage source={{ uri: item?.image }} style={styles.avatar} />
-          <Text>{item?.nameUser}</Text>
+          <FastImage
+            source={{ uri: item?.image || avatarNull }}
+            style={styles.avatar}
+          />
+          <Text>{item?.userName}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -41,11 +50,11 @@ const ItemNewestRecipes = ({ item }) => {
 };
 
 export const ListNewestRecipes = () => {
-  // const { data, loading } = useRequest(getRecipes);
-
-  // if (loading || data.length <= 0) {
-  //   return <View />;
-  // }
+  const { data, loading } = useRequest(getRecipes);
+  console.log('data', data);
+  if (loading || data.length <= 0) {
+    return <View />;
+  }
 
   return (
     <View style={[styles.container]}>
@@ -56,9 +65,9 @@ export const ListNewestRecipes = () => {
         </TouchableOpacity>
       </View>
       <ScrollView>
-        {/* {data.map(item => (
+        {data.map(item => (
           <ItemNewestRecipes key={item?.id} item={item} />
-        ))} */}
+        ))}
       </ScrollView>
     </View>
   );
@@ -90,6 +99,8 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 20,
     marginRight: 5,
+    borderWidth: 1,
+    borderColor: '#CAD3DD',
   },
   nameRecipes: {
     textTransform: 'uppercase',

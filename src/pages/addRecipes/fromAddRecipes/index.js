@@ -12,6 +12,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import useRequest from '@ahooksjs/use-request';
 import { styles } from './styles';
 import { postRecipes } from '../../../apis/recipes';
+import { useAccountStateValue } from '../../../atoms/account';
 
 const paramsInfo = {
   image: '',
@@ -29,6 +30,7 @@ const paramsInfo = {
 };
 
 export const FromAddRecipes = () => {
+  const account = useAccountStateValue();
   const [isUpload, setUpload] = React.useState(false);
   const [info, setInfo] = React.useState(paramsInfo);
 
@@ -50,6 +52,7 @@ export const FromAddRecipes = () => {
 
   const handleUpload = () => {
     setUpload(true);
+    info.userId = account?.id;
     // recipes.run({ data: info });
     setTimeout(() => {
       setInfo(paramsInfo);

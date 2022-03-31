@@ -4,7 +4,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
@@ -12,15 +11,10 @@ import FastImage from 'react-native-fast-image';
 import useRequest from '@ahooksjs/use-request';
 import { stylesCommon } from '../../../constants/stylesCommon';
 import { getRecipes } from '../../../apis/recipes';
-
-const imageNull =
-  'https://www.uaex.uada.edu/life-skills-wellness/food-nutrition/eating-well/EFNEP/images/Recipes-Banner.jpg';
-const avatarNull =
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTbAztm0T--l3uXW1xUGhbrZerEhU-JFaKDRQYrMusGzjQGjKkIdrG79S4_tYio-abW5Q&usqp=CAU';
+import { imageNull, avatarNull } from '../../../constants';
 
 const ItemNewestRecipes = ({ item }) => {
   const { navigate } = useNavigation();
-  console.log('item', item);
 
   const onDetail = () => {
     navigate('detailRecipesScreen', { id: item?.id });

@@ -11,6 +11,7 @@ const accountState = atom({
     username: 'Quang',
     email: 'test@gmail.com',
     token: null,
+    id: 1,
   },
 });
 

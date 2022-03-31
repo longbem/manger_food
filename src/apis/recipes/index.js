@@ -58,3 +58,20 @@ export const searchRecipes = async search => {
     console.log('error', e);
   }
 };
+
+export const getMyRecipes = async ({ idUser }) => {
+  try {
+    const response = await firestore().collection(RECIPES).get();
+
+    let arrayRecipes = [];
+    response.forEach(snapshot => {
+      let data = snapshot.data();
+      console.log('data', data);
+      data.data.id = snapshot.id;
+      arrayRecipes.push(data.data);
+    });
+    return arrayRecipes.filter(item => item.userId === `${idUser}`);
+  } catch (e) {
+    console.log('error', e);
+  }
+};

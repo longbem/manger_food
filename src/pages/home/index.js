@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import { ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import { stylesCommon } from '../../constants/stylesCommon';
 import { HomeHeader } from './header';
 import { Search } from './search';
@@ -15,7 +15,7 @@ export const HomeScreen = () => {
         <Search />
         <Category />
         <SliderCategory />
-        <ListNewestRecipes />
+        {/* <ListNewestRecipes /> */}
       </ScrollView>
     </SafeAreaView>
   );

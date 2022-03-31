@@ -22,7 +22,9 @@ export const HomeHeader = () => {
             ? 'Good Afternoon'
             : 'Good Evening'}
         </Text>
-        {account?.token ? <Text style={styles.name}>BEM</Text> : null}
+        {account?.token ? (
+          <Text style={styles.name}>{account?.username}</Text>
+        ) : null}
       </View>
       <FastImage
         source={{ uri: account?.avatar || avatarNull }}

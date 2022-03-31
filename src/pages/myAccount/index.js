@@ -8,12 +8,12 @@ import { useAccountState } from '../../atoms/account';
 import { styles } from './styles';
 
 const paramsInfo = {
-  image: '',
+  avatar: '',
+  username: '',
 };
 
 export const MyAccountScreen = () => {
   const [isUpload, setUpload] = React.useState(false);
-  const [info, setInfo] = React.useState(paramsInfo);
   const [account, setAccount] = useAccountState();
 
   // const recipes = useRequest(postRecipes, {
@@ -25,37 +25,36 @@ export const MyAccountScreen = () => {
 
   const onSelectImage = async () => {
     const result = await launchImageLibrary();
-    setInfo({ ...info, image: result?.assets[0].uri });
+    setAccount({ ...account, avatar: result?.assets[0].uri });
   };
 
   const onDeleteImage = () => {
-    setInfo({ ...info, image: '' });
+    setAccount({ ...account, avatar: '' });
   };
 
   const handleUpload = () => {
     setUpload(true);
     // recipes.run({ data: info });
     setTimeout(() => {
-      setInfo(paramsInfo);
+      setAccount({});
       setUpload(false);
-      console.log('info', info);
     }, 2000);
   };
 
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity
-        style={styles.viewImageAdd(info.image)}
+        style={styles.viewImageAdd(account.avatar)}
         onPress={onSelectImage}>
         <Image
           source={
-            info.image
-              ? { uri: info.image }
+            account?.avatar
+              ? { uri: account?.avatar }
               : require('../../assets/add-photo.png')
           }
           style={styles.image}
         />
-        {info.image ? (
+        {account?.avatar ? (
           <TouchableOpacity style={styles.close} onPress={onDeleteImage}>
             <AntDesign name="close" size={20} />
           </TouchableOpacity>
@@ -65,17 +64,12 @@ export const MyAccountScreen = () => {
         <FormControl.Label mt="3">Tên người dùng</FormControl.Label>
         <Input
           placeholder="Username"
-          // onChangeText={text => setInfo({ ...info, recipesName: text })}
+          // onChangeText={text => setAccount({ ...account, username: text })}
           value={account?.username}
           isDisabled={account?.username}
         />
         <FormControl.Label mt="3">Email</FormControl.Label>
-        <Input
-          placeholder="Email"
-          // onChangeText={text => setInfo({ ...info, recipesName: text })}
-          value={account?.email}
-          isDisabled={true}
-        />
+        <Input placeholder="Email" value={account?.email} isDisabled={true} />
       </FormControl>
       <Button
         mb="20"

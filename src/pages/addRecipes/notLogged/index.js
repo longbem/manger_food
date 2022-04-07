@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/core';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { stylesCommon } from '../../../constants/stylesCommon';
+import { I18n } from '../../../utils/languages';
 
 export const NotLogged = () => {
   const { navigate } = useNavigation();
@@ -18,10 +19,10 @@ export const NotLogged = () => {
         style={styles.image}
       />
       <Text style={styles.recipes}>
-        Đăng nhập hoặc tạo một tài khoản để thêm công thức.
+        {I18n.t('login.loginOrCreateAccountToAddRecipes')}
       </Text>
       <TouchableOpacity style={styles.btnLogin} onPress={onLogin}>
-        <Text style={styles.login}>Đăng nhập hoặc tạo một tài khoản</Text>
+        <Text style={styles.login}>{I18n.t('login.loginOrCreateAccount')}</Text>
       </TouchableOpacity>
     </View>
   );

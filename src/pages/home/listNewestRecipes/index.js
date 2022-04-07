@@ -12,6 +12,7 @@ import useRequest from '@ahooksjs/use-request';
 import { stylesCommon } from '../../../constants/stylesCommon';
 import { getRecipes } from '../../../apis/recipes';
 import { imageNull, avatarNull } from '../../../constants';
+import { I18n } from '../../../utils/languages';
 
 const ItemNewestRecipes = ({ item }) => {
   const { navigate } = useNavigation();
@@ -45,7 +46,6 @@ const ItemNewestRecipes = ({ item }) => {
 
 export const ListNewestRecipes = () => {
   const { data, loading } = useRequest(getRecipes);
-  console.log('data', data);
   if (loading || data.length <= 0) {
     return <View />;
   }
@@ -53,9 +53,9 @@ export const ListNewestRecipes = () => {
   return (
     <View style={[styles.container]}>
       <View style={[styles.row, styles.spaceBetween]}>
-        <Text style={styles.newestRecipes}>Công thức nấu ăn mới nhất</Text>
+        <Text style={styles.newestRecipes}>{I18n.t('home.latestRecipes')}</Text>
         <TouchableOpacity>
-          <Text style={styles.seeMore}>Xem thêm</Text>
+          <Text style={styles.seeMore}>{I18n.t('home.seeAll')}</Text>
         </TouchableOpacity>
       </View>
       <ScrollView>

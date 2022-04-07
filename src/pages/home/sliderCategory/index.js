@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import FastImage from 'react-native-fast-image';
 import { stylesCommon } from '../../../constants/stylesCommon';
+import { I18n } from '../../../utils/languages';
 
 const images = [
   'https://www.naturallygood.de/wp-content/uploads/2018/01/HirseSalat_3225.jpg',
@@ -15,7 +16,7 @@ const { width } = Dimensions.get('window');
 export const SliderCategory = () => {
   return (
     <View style={[styles.container]}>
-      <Text style={styles.label}>Công thức nấu ăn được sưu tầm nhiều nhất</Text>
+      <Text style={styles.label}>{I18n.t('home.recipesCollected')}</Text>
       <SliderBox
         ImageComponent={FastImage}
         images={images}

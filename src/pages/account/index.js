@@ -12,6 +12,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
 import { stylesCommon } from '../../constants/stylesCommon';
 import { useAccountState } from '../../atoms/account';
+import { I18n } from '../../utils/languages';
 
 const avatarNull =
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTbAztm0T--l3uXW1xUGhbrZerEhU-JFaKDRQYrMusGzjQGjKkIdrG79S4_tYio-abW5Q&usqp=CAU';
@@ -28,7 +29,7 @@ const ItemAccount = ({ label, icon, onPress, rightIcon }) => {
       ]}>
       <View style={[styles.row, styles.aliCenter]}>
         <AntDesign name={icon} size={20} color="#CDCDCD" />
-        <Text style={styles.label}>{label}</Text>
+        <Text style={styles.label}>{I18n.t(label)}</Text>
       </View>
       {rightIcon ? <AntDesign name="right" color="#CDCDCD" size={17} /> : null}
     </TouchableOpacity>
@@ -41,37 +42,37 @@ export const AccountScreen = () => {
   const menuAccount = [
     {
       key: 'login',
-      name: 'Đăng nhập hoặc tạo một tài khoản',
+      name: 'login.loginOrCreateAccount',
       icon: 'adduser',
       onPress: () => navigate('loginScreen'),
     },
     {
       key: 'profile',
-      name: 'Tài khoản của tôi',
+      name: 'login.myAccount',
       icon: 'user',
       onPress: () => navigate('myAccountScreen'),
     },
     {
       key: 'language',
-      name: 'Ngôn ngữ',
+      name: 'login.language',
       icon: 'dribbble',
       onPress: () => navigate('languageScreen'),
     },
     {
       key: 'myRecipes',
-      name: 'Công thức của tôi',
+      name: 'login.myRecipes',
       icon: 'form',
       onPress: () => navigate('myRecipesScreen'),
     },
     {
       key: 'like',
-      name: 'Yêu thích',
+      name: 'login.love',
       icon: 'hearto',
       onPress: () => navigate('FavouriteRecipesScreen'),
     },
     {
       key: 'logout',
-      name: 'Đăng xuất',
+      name: 'login.logout',
       icon: 'logout',
       onPress: () => handleLogout(),
     },
@@ -81,7 +82,7 @@ export const AccountScreen = () => {
     setAccount({ ...account, token: null });
     // await AsyncStorage.setItem('login', null);
   };
-
+  console.log('I18n', I18n.locale);
   console.log('account', account);
   return (
     <SafeAreaView style={styles.safe}>

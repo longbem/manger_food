@@ -6,6 +6,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import useRequest from '@ahooksjs/use-request';
 import { useAccountState } from '../../atoms/account';
 import { styles } from './styles';
+import { I18n } from '../../utils/languages';
 
 const paramsInfo = {
   avatar: '',
@@ -61,14 +62,14 @@ export const MyAccountScreen = () => {
         ) : null}
       </TouchableOpacity>
       <FormControl mt="10" mb="10">
-        <FormControl.Label mt="3">Tên người dùng</FormControl.Label>
+        <FormControl.Label mt="3">{I18n.t('login.username')}</FormControl.Label>
         <Input
           placeholder="Username"
           // onChangeText={text => setAccount({ ...account, username: text })}
           value={account?.username}
           isDisabled={account?.username}
         />
-        <FormControl.Label mt="3">Email</FormControl.Label>
+        <FormControl.Label mt="3">{I18n.t('account.email')}</FormControl.Label>
         <Input placeholder="Email" value={account?.email} isDisabled={true} />
       </FormControl>
       <Button
@@ -77,8 +78,8 @@ export const MyAccountScreen = () => {
         leftIcon={<AntDesign name="clouduploado" size={20} color="#7BD8E8" />}
         isLoading={isUpload}
         variant="outline"
-        isLoadingText="Đang cập nhật">
-        Cập nhật
+        isLoadingText={I18n.t('account.updating')}>
+        {I18n.t('account.update')}
       </Button>
     </ScrollView>
   );

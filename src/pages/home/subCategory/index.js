@@ -9,6 +9,7 @@ import {
 import FastImage from 'react-native-fast-image';
 import { useNavigation } from '@react-navigation/core';
 import { stylesCommon } from '../../../constants/stylesCommon';
+import { I18n } from '../../../utils/languages';
 
 export const Category = () => {
   const { navigate } = useNavigation();
@@ -24,9 +25,9 @@ export const Category = () => {
   return (
     <View style={[styles.container]}>
       <View style={[styles.row, styles.spaceBetween]}>
-        <Text style={styles.labelCategory}>Thể loại</Text>
+        <Text style={styles.labelCategory}>{I18n.t('home.category')}</Text>
         <TouchableOpacity onPress={onMore}>
-          <Text style={styles.seeMore}>Xem thêm</Text>
+          <Text style={styles.seeMore}>{I18n.t('home.seeAll')}</Text>
         </TouchableOpacity>
       </View>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>

@@ -10,6 +10,8 @@ import {
 import { useNavigation } from '@react-navigation/core';
 import FastImage from 'react-native-fast-image';
 import { stylesCommon } from '../../constants/stylesCommon';
+import { changeLanguage } from '../../utils/languages';
+import { I18n } from '../../utils/languages';
 
 const ItemAccount = ({ label, source, onPress }) => {
   return (
@@ -26,9 +28,11 @@ export const LanguageScreen = () => {
   const { goBack } = useNavigation();
   const [loading, setLoading] = React.useState(false);
 
-  const onSelectLanguage = () => {
+  const onSelectLanguage = languagesKey => {
     setLoading(true);
+    changeLanguage(languagesKey);
     setTimeout(() => {
+      console.log('I18n', I18n.locale);
       goBack();
       setLoading(false);
     }, 800);
@@ -36,16 +40,18 @@ export const LanguageScreen = () => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <Text style={styles.selectLanguage}>Chọn ngôn ngữ</Text>
+      <Text style={styles.selectLanguage}>
+        {I18n.t('login.selectLanguage')}
+      </Text>
       <ItemAccount
         source={require('../../assets/vietnam.png')}
         label="Vietnamese"
-        onPress={onSelectLanguage}
+        onPress={() => onSelectLanguage('vn')}
       />
       <ItemAccount
         source={require('../../assets/english.png')}
         label="English"
-        onPress={onSelectLanguage}
+        onPress={() => onSelectLanguage('en')}
       />
       {loading && <ActivityIndicator size="large" animating />}
     </SafeAreaView>

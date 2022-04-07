@@ -2,13 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NativeBaseProvider } from 'native-base';
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from 'recoil';
+import { RecoilRoot } from 'recoil';
 import { MyBottomTabs } from './tabBottom';
 import { DetailRecipesScreen } from '../pages/detailRecipes';
 import { LoginScreen } from '../pages/login';
@@ -20,6 +14,7 @@ import { SearchScreen } from '../pages/searchProducts';
 import { FavouriteRecipesScreen } from '../pages/favouriteRecipes';
 import { MyRecipesScreen } from '../pages/myRecipes';
 import { MyAccountScreen } from '../pages/myAccount';
+import { I18n } from '../utils/languages';
 
 const Stack = createStackNavigator();
 
@@ -58,14 +53,14 @@ const MainStack = () => {
         name="languageScreen"
         component={LanguageScreen}
         options={{
-          title: 'Languages',
+          title: I18n.t('login.language'),
         }}
       />
       <Stack.Screen
         name="categoryScreen"
         component={CategoryScreen}
         options={{
-          title: 'Thể loại',
+          title: I18n.t('home.category'),
         }}
       />
       <Stack.Screen
@@ -77,28 +72,28 @@ const MainStack = () => {
         name="searchScreen"
         component={SearchScreen}
         options={{
-          title: 'Tìm kiếm công thức',
+          title: I18n.t('search.recipeSearch'),
         }}
       />
       <Stack.Screen
         name="FavouriteRecipesScreen"
         component={FavouriteRecipesScreen}
         options={{
-          title: 'Yêu thích',
+          title: I18n.t('login.love'),
         }}
       />
       <Stack.Screen
         name="myRecipesScreen"
         component={MyRecipesScreen}
         options={{
-          title: 'Công thức của tôi',
+          title: I18n.t('login.myRecipes'),
         }}
       />
       <Stack.Screen
         name="myAccountScreen"
         component={MyAccountScreen}
         options={{
-          title: 'Công thức của tôi',
+          title: I18n.t('login.myAccount'),
         }}
       />
     </Stack.Navigator>

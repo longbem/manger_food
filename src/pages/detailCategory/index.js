@@ -1,4 +1,3 @@
-import { useRoute } from '@react-navigation/core';
 import React from 'react';
 import {
   View,

@@ -1,16 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import { Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { stylesCommon } from '../../constants/stylesCommon';
-
-const { width } = Dimensions.get('window');
 
 export const CategoryScreen = () => {
   return (

@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { stylesCommon } from '../../constants/stylesCommon';
 import { useAccountState } from '../../atoms/account';
+import { I18n } from '../../utils/languages';
 
 export const LoginScreen = () => {
   const { goBack } = useNavigation();
@@ -59,7 +60,7 @@ export const LoginScreen = () => {
               color="muted.400"
             />
           }
-          placeholder="username"
+          placeholder={I18n.t('login.username')}
         />
         <Input
           w={{
@@ -77,7 +78,7 @@ export const LoginScreen = () => {
               color="muted.400"
             />
           }
-          placeholder="password"
+          placeholder={I18n.t('login.password')}
           InputRightElement={
             <TouchableOpacity style={styles.eye} onPress={handleShowPass}>
               <Entypo name={info.show ? 'eye' : 'eye-with-line'} size={20} />
@@ -88,11 +89,11 @@ export const LoginScreen = () => {
           onPress={handleLogin}
           isLoading={isLogin}
           variant="outline"
-          isLoadingText="Đang đăng nhập">
-          Đăng nhập
+          isLoadingText={I18n.t('login.logging')}>
+          {I18n.t('login.login')}
         </Button>
         <Button variant="link" colorScheme="red">
-          Tôi chưa có tài khoản.
+          {I18n.t('login.isNotAccount')}
         </Button>
       </Stack>
       <TouchableOpacity style={styles.back} onPress={() => goBack()}>

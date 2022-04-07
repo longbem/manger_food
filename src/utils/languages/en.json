@@ -1,0 +1,62 @@
+{
+  "home": {
+    "goodMorning": "Good Morning",
+    "goodAfternoon": "Good Afternoon",
+    "goodEvening": "Good Evening",
+    "afternoon": "Afternoon",
+    "seeAll": "See All",
+    "category": "Category",
+    "recipesCollected": "Most Collected Recipes",
+    "latestRecipes": "Latest recipes",
+    "": ""
+  },
+  "search": {
+    "recipeSearch": "Recipe search",
+    "enterTheNameOfTheDish": "Enter the name of the dish...",
+    "": ""
+  },
+  "account": {
+    "Languages": "Languages",
+    "selectLanguages": "Select Languages",
+    "guests": "Guests",
+    "email": "Email",
+    "update": "Update",
+    "updating": "Updating"
+  },
+  "login": {
+    "login": "Login",
+    "iNotAccount": "I don't have an account yet",
+    "password": "Password",
+    "username": "User name",
+    "logging": "Logging",
+    "myAccount": "My Account",
+    "myRecipes": "My Recipes",
+    "love": "Love",
+    "logout": "Logout",
+    "loginOrCreateAccount": "Log in or create an account",
+    "loginOrCreateAccountToAddRecipes": "Login or create an account to add recipes.",
+    "language": "Language",
+    "selectLanguage": "Select language"
+  },
+  "recipes": {
+    "addRecipes": "Add recipes",
+    "nameRecipes": "Name recipes",
+    "uploadRecipes": "Up load recipes",
+    "difficulty": "Difficulty",
+    "cuisine": "Cuisine",
+    "ingredients": "Ingredients",
+    "steps": "Steps",
+    "addComment": "Add comment",
+    "addingComments": "Adding Comments",
+    "uploadingRecipes": "Uploading Recipes",
+    "selectDifficulty": "Select Difficulty",
+    "selectCategory": "Select Category",
+    "selectCuisine": "Select Cuisine",
+    "category": "Category",
+    "": ""
+  },
+  "stack": {
+    "add": "Add",
+    "account": "Account"
+  }
+}

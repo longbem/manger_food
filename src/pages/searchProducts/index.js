@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 import useRequest from '@ahooksjs/use-request';
 import { stylesCommon } from '../../constants/stylesCommon';
 import { searchRecipes } from '../../apis/recipes';
+import { I18n } from '../../utils/languages';
 
 const SearchEmpty = () => {
   return (
@@ -32,7 +33,7 @@ export const SearchScreen = () => {
         <AntDesign name="search1" size={20} style={styles.icon} />
         <TextInput
           style={styles.input}
-          placeholder="Nhập tên món ăn....!"
+          placeholder={I18n.t('search.enterTheNameOfTheDish')}
           onEndEditing={onEndEditing}
           onChangeText={text => setSearch(text)}
         />

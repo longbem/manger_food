@@ -13,6 +13,7 @@ import useRequest from '@ahooksjs/use-request';
 import { styles } from './styles';
 import { postRecipes } from '../../../apis/recipes';
 import { useAccountStateValue } from '../../../atoms/account';
+import { I18n } from '../../../utils/languages';
 
 const paramsInfo = {
   image: '',
@@ -86,46 +87,56 @@ export const FromAddRecipes = () => {
           <Select.Item label="Việt nam" value="vn" />
           <Select.Item label="English" value="uk" />
         </Select> */}
-        <FormControl.Label mt="3">Tên món ăn</FormControl.Label>
+        <FormControl.Label mt="3">
+          {I18n.t('recipes.nameRecipes')}
+        </FormControl.Label>
         <Input
-          placeholder="Tên món ăn"
+          placeholder={I18n.t('recipes.nameRecipes')}
           onChangeText={text => setInfo({ ...info, recipesName: text })}
         />
-        <FormControl.Label mt="3">Độ khó</FormControl.Label>
+        <FormControl.Label mt="3">
+          {I18n.t('recipes.difficulty')}
+        </FormControl.Label>
         <Select
-          accessibilityLabel="Chọn độ khó món ăn"
-          placeholder="Chọn độ khó món ăn"
+          accessibilityLabel={I18n.t('recipes.selectDifficulty')}
+          placeholder={I18n.t('recipes.selectDifficulty')}
           onValueChange={value => setInfo({ ...info, difficulty: value })}>
           <Select.Item label="Dễ ràng" value="easy" />
           <Select.Item label="Trung bình" value="medium" />
           <Select.Item label="Khó" value="hard" />
         </Select>
-        <FormControl.Label mt="3">Thể loại</FormControl.Label>
+        <FormControl.Label mt="3">
+          {I18n.t('recipes.category')}
+        </FormControl.Label>
         <Select
-          accessibilityLabel="Chọn thể loại"
-          placeholder="Chọn thể loại"
+          accessibilityLabel={I18n.t('recipes.category')}
+          placeholder={I18n.t('recipes.selectCategory')}
           onValueChange={value => setInfo({ ...info, category: value })}>
           <Select.Item label="Cơm" value="easy" />
           <Select.Item label="Đồ nướng" value="medium" />
           <Select.Item label="Lẩu" value="hard" />
         </Select>
-        <FormControl.Label mt="3">Loại ẩm thực</FormControl.Label>
+        <FormControl.Label mt="3">
+          {I18n.t('recipes.cuisine')}
+        </FormControl.Label>
         <Select
-          accessibilityLabel="Chọn loại ẩm thực"
-          placeholder="Chọn loại ẩm thực"
+          accessibilityLabel={I18n.t('recipes.cuisine')}
+          placeholder={I18n.t('recipes.selectCuisine')}
           onValueChange={value => setInfo({ ...info, cuisine: value })}>
           <Select.Item label="Châu Á" value="chau_a" />
           <Select.Item label="Châu Âu" value="chau_au" />
           <Select.Item label="Châu Mỹ" value="chau_my" />
         </Select>
-        <FormControl.Label mt="3">Nguyên liệu</FormControl.Label>
+        <FormControl.Label mt="3">
+          {I18n.t('recipes.ingredients')}
+        </FormControl.Label>
         <TextArea
-          placeholder="Nguyên Liệu"
+          placeholder={I18n.t('recipes.ingredients')}
           onChangeText={text => setInfo({ ...info, ingredients: text })}
         />
-        <FormControl.Label mt="3">Các bước thực hiện</FormControl.Label>
+        <FormControl.Label mt="3">{I18n.t('recipes.steps')}</FormControl.Label>
         <TextArea
-          placeholder="Các bước thực hiện"
+          placeholder={I18n.t('recipes.steps')}
           h={40}
           onChangeText={text => setInfo({ ...info, steps: text })}
         />
@@ -140,8 +151,8 @@ export const FromAddRecipes = () => {
         leftIcon={<AntDesign name="clouduploado" size={20} color="#7BD8E8" />}
         isLoading={isUpload}
         variant="outline"
-        isLoadingText="Đang úp công thức">
-        Úp công thức
+        isLoadingText={I18n.t('recipes.uploadingRecipes')}>
+        {I18n.t('recipes.uploadRecipes')}
       </Button>
     </ScrollView>
   );

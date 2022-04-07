@@ -14,11 +14,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import useRequest from '@ahooksjs/use-request';
 import { stylesCommon } from '../../constants/stylesCommon';
 import { detailRecipes } from '../../apis/recipes';
-
-const imageNull =
-  'https://www.uaex.uada.edu/life-skills-wellness/food-nutrition/eating-well/EFNEP/images/Recipes-Banner.jpg';
-const avatarNull =
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTbAztm0T--l3uXW1xUGhbrZerEhU-JFaKDRQYrMusGzjQGjKkIdrG79S4_tYio-abW5Q&usqp=CAU';
+import { imageNull, avatarNull } from '../../constants';
+import { I18n } from '../../utils/languages';
 
 export const DetailRecipesScreen = () => {
   const route = useRoute();
@@ -71,18 +68,25 @@ export const DetailRecipesScreen = () => {
             />
             <Text>{data?.userName}</Text>
           </View>
-          <Text style={styles.commentLabel}>Thành phần:</Text>
+          <Text style={styles.commentLabel}>
+            {I18n.t('recipes.ingredients')}:
+          </Text>
           <Text>{data?.ingredients}</Text>
-          <Text style={styles.commentLabel}>Các bước:</Text>
+          <Text style={styles.commentLabel}>{I18n.t('recipes.steps')}:</Text>
           <Text>{data?.steps}</Text>
-          <Text style={styles.commentLabel}>Nhận xét:</Text>
+          <Text style={styles.commentLabel}>
+            {I18n.t('recipes.ingredients')}:
+          </Text>
           <TextInput
             placeholder="Viết nhận xét của bạn...!"
             multiline
             style={styles.input}
           />
-          <Button mt="5" variant="outline" isLoadingText="Đang thêm nhận xét">
-            Thêm nhận xét
+          <Button
+            mt="5"
+            variant="outline"
+            isLoadingText={I18n.t('recipes.addingComments')}>
+            {I18n.t('recipes.addComment')}
           </Button>
         </View>
       </ScrollView>

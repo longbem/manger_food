@@ -1,0 +1,60 @@
+{
+  "home": {
+    "goodMorning": "Chào buổi sáng",
+    "goodAfternoon": "Chào buổi chiều",
+    "goodEvening": "Chào buổi tối",
+    "seeAll": "Xem thêm",
+    "category": "Thể loại",
+    "recipesCollected": "Công thức nấu ăn được sưu tầm nhiều nhất",
+    "latestRecipes": "Công thức nấu ăn mới nhất",
+    "": ""
+  },
+  "search": {
+    "recipeSearch": "Tìm kiếm công thức",
+    "enterTheNameOfTheDish": "Nhập món ăn cần tìm...",
+    "": ""
+  },
+  "account": {
+    "Languages": "Ngôn ngữ",
+    "selectLanguages": "Chọn ngôn ngữ",
+    "guests": "Khách",
+    "email": "Email",
+    "update": "Cập nhật",
+    "updating": "Đang cập nhật"
+  },
+  "login": {
+    "login": "Đăng nhập",
+    "isNotAccount": "Tôi chưa có tài khoản",
+    "password": "Mật khẩu",
+    "username": "Tên người dùng",
+    "logging": "Đang đăng nhập",
+    "myAccount": "Tài khoản của tôi",
+    "myRecipes": "Công thức của tôi",
+    "love": "Yêu thích",
+    "logout": "Đăng xuất",
+    "loginOrCreateAccountToAddRecipes": "Đăng nhập hoặc tạo một tài khoản để thêm công thức.",
+    "loginOrCreateAccount": "Đăng nhập hoặc tạo một tài khoản",
+    "language": "Ngôn ngữ",
+    "selectLanguage": "Chọn ngôn ngữ"
+  },
+  "recipes": {
+    "addRecipes": "Thêm công thức",
+    "nameRecipes": "Tên công thức",
+    "uploadRecipes": "Tải công thức",
+    "difficulty": "Khó khăn",
+    "uploadingRecipes": "Đang úp công thức",
+    "selectDifficulty": "Chọn độ khó món ăn",
+    "selectCategory": "Chọn thể loại",
+    "selectCuisine": "Chọn ẩm thực",
+    "category": "Thể loại",
+    "cuisine": "Ẩm thực",
+    "ingredients": "Nguyên liệu",
+    "steps": "Các bước thực hiện",
+    "addComment": "Thêm nhận xét",
+    "addingComments": "Đang thêm nhận xét",
+  },
+  "stack": {
+    "add": "Thêm",
+    "account": "Tài khoản"
+  }
+}

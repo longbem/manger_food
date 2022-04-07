@@ -4,6 +4,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { AccountStack } from './accountStack';
 import { HomeStack } from './homeStack';
 import { AddRecipesScreen } from '../pages/addRecipes';
+import { I18n } from '../utils/languages';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,8 +31,8 @@ export function MyBottomTabs() {
         super
         component={AddRecipesScreen}
         options={{
-          title: 'Thêm Công Thức',
-          tabBarLabel: 'Thêm',
+          title: I18n.t('recipes.addRecipes'),
+          tabBarLabel: I18n.t('stack.add'),
           tabBarIcon: ({ focused }) => (
             <AntDesign
               name="plussquare"
@@ -46,7 +47,7 @@ export function MyBottomTabs() {
         component={AccountStack}
         options={{
           headerShown: false,
-          tabBarLabel: 'Tài khoản',
+          tabBarLabel: I18n.t('stack.account'),
           tabBarIcon: ({ focused }) => (
             <AntDesign
               name="user"

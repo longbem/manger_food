@@ -54,6 +54,8 @@ export const FromAddRecipes = () => {
   const handleUpload = () => {
     setUpload(true);
     info.userId = account?.id;
+    info.userName = account?.username;
+    console.log('info', info);
     // recipes.run({ data: info });
     setTimeout(() => {
       setInfo(paramsInfo);

@@ -1,4 +1,3 @@
-import { useRoute } from '@react-navigation/core';
 import React from 'react';
 import {
   View,
@@ -19,7 +18,7 @@ const ItemNewestRecipes = ({ item }) => {
   const { navigate } = useNavigation();
 
   const onDetail = () => {
-    navigate('detailRecipesScreen', { id: item?.id });
+    navigate('detailRecipesScreen', { id: item?.collectionId });
   };
 
   return (

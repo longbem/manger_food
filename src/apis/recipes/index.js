@@ -2,6 +2,7 @@ import { request } from '../request';
 import firestore from '@react-native-firebase/firestore';
 
 const RECIPES = 'recipes';
+const LOVE_RECIPES = 'loveRecipes';
 
 export const postRecipes = async data => {
   try {
@@ -19,7 +20,7 @@ export const getRecipes = async () => {
     let arrayRecipes = [];
     response.forEach(snapshot => {
       let data = snapshot.data();
-      data.data.id = snapshot.id;
+      data.data.collectionId = snapshot.id;
       arrayRecipes.push(data.data);
     });
     return arrayRecipes;
@@ -70,8 +71,38 @@ export const getMyRecipes = async ({ idUser }) => {
       data.data.id = snapshot.id;
       arrayRecipes.push(data.data);
     });
-    return arrayRecipes.filter(item => item.userId === `${idUser}`);
+    return arrayRecipes.filter(item => item.userId === idUser);
   } catch (e) {
     console.log('error', e);
   }
 };
+
+export const getMyLoveRecipes = async ({ idUser }) => {
+  try {
+    const response = await firestore().collection(LOVE_RECIPES).get();
+
+    let arrayLoveRecipes = [];
+    response.forEach(snapshot => {
+      let data = snapshot.data();
+      data.collectionId = snapshot.id;
+      arrayLoveRecipes.push(data);
+    });
+    const listRicepesLove = arrayLoveRecipes.filter(
+      item => item.userId === idUser,
+    );
+    const listRicepes = await getRecipes();
+    return getMatch(listRicepes, listRicepesLove);
+  } catch (e) {
+    console.log('error', e);
+  }
+};
+
+function getMatch(a, b) {
+  var matches = [];
+  for (var i = 0; i < a.length; i++) {
+    for (var e = 0; e < b.length; e++) {
+      if (a[i].id === b[e].recipesId) matches.push(a[i]);
+    }
+  }
+  return matches;
+}

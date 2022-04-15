@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
 import { Button } from 'native-base';
 import FastImage from 'react-native-fast-image';
@@ -16,10 +17,12 @@ import { stylesCommon } from '../../constants/stylesCommon';
 import { detailRecipes } from '../../apis/recipes';
 import { imageNull, avatarNull } from '../../constants';
 import { I18n } from '../../utils/languages';
+import { useAccountStateValue } from '../../atoms/account';
 
 export const DetailRecipesScreen = () => {
   const route = useRoute();
-  const { goBack } = useNavigation();
+  const account = useAccountStateValue();
+  const { goBack, navigate } = useNavigation();
   const [love, setLove] = React.useState(false);
 
   const { data, loading } = useRequest(detailRecipes, {
@@ -32,6 +35,21 @@ export const DetailRecipesScreen = () => {
 
   const handleLove = () => {
     setLove(!love);
+  };
+
+  const handleEdit = () => {
+    navigate('editRecipesScreen');
+  };
+
+  const handleDelete = () => {
+    Alert.alert('Delete Recipes', 'Bạn có muốn xoá công thức này không?', [
+      {
+        text: 'Cancel',
+        onPress: () => Alert.alert('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
   };
 
   if (loading) {
@@ -88,6 +106,26 @@ export const DetailRecipesScreen = () => {
             isLoadingText={I18n.t('recipes.addingComments')}>
             {I18n.t('recipes.addComment')}
           </Button>
+          {data?.userId == account?.id ? (
+            <View style={[styles.row, styles.spaceBetween]}>
+              <Button
+                mt="5"
+                width={150}
+                variant="outline"
+                onPress={handleEdit}
+                isLoadingText={I18n.t('recipes.addingComments')}>
+                {I18n.t('recipes.edit')}
+              </Button>
+              <Button
+                mt="5"
+                variant="outline"
+                width={150}
+                onPress={handleDelete}
+                isLoadingText={I18n.t('recipes.addingComments')}>
+                {I18n.t('recipes.delete')}
+              </Button>
+            </View>
+          ) : null}
         </View>
       </ScrollView>
       <TouchableOpacity style={styles.back} onPress={handleBack}>

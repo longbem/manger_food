@@ -25,7 +25,7 @@
   },
   "login": {
     "login": "Login",
-    "iNotAccount": "I don't have an account yet",
+    "isNotAccount": "I don't have an account yet",
     "password": "Password",
     "username": "User name",
     "logging": "Logging",
@@ -40,6 +40,7 @@
   },
   "recipes": {
     "addRecipes": "Add recipes",
+    "editRecipes": "Edit recipes",
     "nameRecipes": "Name recipes",
     "uploadRecipes": "Up load recipes",
     "difficulty": "Difficulty",
@@ -53,7 +54,8 @@
     "selectCategory": "Select Category",
     "selectCuisine": "Select Cuisine",
     "category": "Category",
-    "": ""
+    "edit": "Edit",
+    "delete": "Delete"
   },
   "stack": {
     "add": "Add",

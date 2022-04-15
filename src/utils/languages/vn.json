@@ -40,6 +40,7 @@
   "recipes": {
     "addRecipes": "Thêm công thức",
     "nameRecipes": "Tên công thức",
+    "editRecipes": "Sửa công thức",
     "uploadRecipes": "Tải công thức",
     "difficulty": "Khó khăn",
     "uploadingRecipes": "Đang úp công thức",
@@ -52,6 +53,8 @@
     "steps": "Các bước thực hiện",
     "addComment": "Thêm nhận xét",
     "addingComments": "Đang thêm nhận xét",
+    "edit": "Sửa",
+    "delete": "Xoá"
   },
   "stack": {
     "add": "Thêm",

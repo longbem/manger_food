@@ -14,6 +14,8 @@ import { SearchScreen } from '../pages/searchProducts';
 import { FavouriteRecipesScreen } from '../pages/favouriteRecipes';
 import { MyRecipesScreen } from '../pages/myRecipes';
 import { MyAccountScreen } from '../pages/myAccount';
+import { EditRecipesScreen } from '../pages/editRecipes';
+
 import { I18n } from '../utils/languages';
 
 const Stack = createStackNavigator();
@@ -94,6 +96,13 @@ const MainStack = () => {
         component={MyAccountScreen}
         options={{
           title: I18n.t('login.myAccount'),
+        }}
+      />
+      <Stack.Screen
+        name="editRecipesScreen"
+        component={EditRecipesScreen}
+        options={{
+          title: I18n.t('recipes.editRecipes'),
         }}
       />
     </Stack.Navigator>

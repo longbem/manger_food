@@ -16,7 +16,7 @@ export const postRecipes = async data => {
 export const getRecipes = async () => {
   try {
     const response = await firestore().collection(RECIPES).get();
-
+    console.log('response getRecipes', response);
     let arrayRecipes = [];
     response.forEach(snapshot => {
       let data = snapshot.data();
@@ -47,13 +47,36 @@ export const detailRecipes = async ({ id }) => {
 };
 
 export const searchRecipes = async search => {
+  console.log('search', search);
+  const recipes = await getRecipes();
+  console.log('recipes', recipes);
   try {
-    console.log('search', search);
+    // const listRicepes = await getRecipes();
+    // const search = listRicepes.map(item => {
+    //   console.log('item', item.recipesName);
+    //   item.recipesName == search;
+    //   if (item.recipesName == search) {
+    //     return item;
+    //   }
+    // });
+    // console.log('search', search);
+    const resultSearch = [];
     const response = await firestore()
       .collection(RECIPES)
-      .where('recipesName', '==', 'Món 1')
+      .orderBy('recipesName', 'asc')
+      .startAt(search)
+      .endAt(search + '\uf8ff')
       .get();
+
     console.log('response', response);
+    response.forEach(snapshot => {
+      console.log('snapshot', snapshot);
+      let data = snapshot.data();
+      console.log('data', data);
+      // data.data.collectionId = snapshot.id;
+      // resultSearch.push(data.data);
+    });
+    console.log('resultSearch', resultSearch);
     // return response.data().data;
   } catch (e) {
     console.log('error', e);

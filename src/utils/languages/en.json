@@ -36,7 +36,10 @@
     "loginOrCreateAccount": "Log in or create an account",
     "loginOrCreateAccountToAddRecipes": "Login or create an account to add recipes.",
     "language": "Language",
-    "selectLanguage": "Select language"
+    "selectLanguage": "Select language",
+    "iHaveAccount": "I have an account, log-in",
+    "register": "Register",
+    "registering": "Registering"
   },
   "recipes": {
     "addRecipes": "Add recipes",

@@ -117,11 +117,11 @@ export const getMyLoveRecipes = async ({ idUser }) => {
       data.collectionId = snapshot.id;
       arrayLoveRecipes.push(data);
     });
-    const listRicepesLove = arrayLoveRecipes.filter(
+    const listRecipesLove = arrayLoveRecipes.filter(
       item => item.userId === idUser,
     );
-    const listRicepes = await getRecipes();
-    return getMatch(listRicepes, listRicepesLove);
+    const listRecipes = await getRecipes();
+    return getMatch(listRecipes, listRecipesLove);
   } catch (e) {
     console.log('error', e);
   }

@@ -11,7 +11,7 @@ import { useAccountState } from '../../atoms/account';
 import { I18n } from '../../utils/languages';
 
 export const LoginScreen = () => {
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
   const [isLogin, setLogin] = React.useState(false);
   const [account, setAccount] = useAccountState();
   const [info, setInfo] = React.useState({
@@ -30,6 +30,10 @@ export const LoginScreen = () => {
 
   const handleShowPass = () => {
     setInfo({ ...info, show: !info.show });
+  };
+
+  const onRegister = () => {
+    navigate('registerScreen');
   };
 
   return (
@@ -92,7 +96,7 @@ export const LoginScreen = () => {
           isLoadingText={I18n.t('login.logging')}>
           {I18n.t('login.login')}
         </Button>
-        <Button variant="link" colorScheme="red">
+        <Button variant="link" colorScheme="red" onPress={onRegister}>
           {I18n.t('login.isNotAccount')}
         </Button>
       </Stack>

@@ -35,7 +35,10 @@
     "loginOrCreateAccountToAddRecipes": "Đăng nhập hoặc tạo một tài khoản để thêm công thức.",
     "loginOrCreateAccount": "Đăng nhập hoặc tạo một tài khoản",
     "language": "Ngôn ngữ",
-    "selectLanguage": "Chọn ngôn ngữ"
+    "selectLanguage": "Chọn ngôn ngữ",
+    "iHaveAccount": "Tôi có tài khoản, đăng nhập",
+    "register": "Đăng ký",
+    "registering": "Đang đăng ký"
   },
   "recipes": {
     "addRecipes": "Thêm công thức",

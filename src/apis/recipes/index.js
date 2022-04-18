@@ -33,7 +33,14 @@ export const putRecipes = () => {
   return;
 };
 
-export const deleteRecipes = () => {
+export const deleteRecipes = async ({ id }) => {
+  try {
+    const response = await firestore().collection(RECIPES).doc(id).delete();
+    console.log('response', response);
+    // return response.data().data;
+  } catch (e) {
+    console.log('error', e);
+  }
   return;
 };
 
@@ -91,7 +98,7 @@ export const getMyRecipes = async ({ idUser }) => {
     response.forEach(snapshot => {
       let data = snapshot.data();
       console.log('data', data);
-      data.data.id = snapshot.id;
+      data.data.collectionId = snapshot.id;
       arrayRecipes.push(data.data);
     });
     return arrayRecipes.filter(item => item.userId === idUser);

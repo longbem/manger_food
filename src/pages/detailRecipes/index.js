@@ -14,7 +14,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import useRequest from '@ahooksjs/use-request';
 import { stylesCommon } from '../../constants/stylesCommon';
-import { detailRecipes } from '../../apis/recipes';
+import { detailRecipes, deleteRecipes } from '../../apis/recipes';
 import { imageNull, avatarNull } from '../../constants';
 import { I18n } from '../../utils/languages';
 import { useAccountStateValue } from '../../atoms/account';
@@ -25,6 +25,9 @@ export const DetailRecipesScreen = () => {
   const { goBack, navigate } = useNavigation();
   const [love, setLove] = React.useState(false);
 
+  const recipes = useRequest(deleteRecipes, {
+    manual: true,
+  });
   const { data, loading } = useRequest(detailRecipes, {
     defaultParams: [{ id: route.params.id }],
   });
@@ -41,6 +44,10 @@ export const DetailRecipesScreen = () => {
     navigate('editRecipesScreen');
   };
 
+  const onDelete = () => {
+    recipes.run({ id: route.params.id });
+  };
+
   const handleDelete = () => {
     Alert.alert('Delete Recipes', 'Bạn có muốn xoá công thức này không?', [
       {
@@ -48,7 +55,14 @@ export const DetailRecipesScreen = () => {
         onPress: () => Alert.alert('Cancel Pressed'),
         style: 'cancel',
       },
-      { text: 'OK', onPress: () => console.log('OK Pressed') },
+      {
+        text: 'OK',
+        onPress: () => {
+          onDelete();
+          goBack();
+          goBack();
+        },
+      },
     ]);
   };
 

@@ -14,7 +14,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import useRequest from '@ahooksjs/use-request';
 import { stylesCommon } from '../../constants/stylesCommon';
-import { detailRecipes, deleteRecipes } from '../../apis/recipes';
+import { detailRecipes, deleteRecipes, postLove } from '../../apis/recipes';
 import { imageNull, avatarNull } from '../../constants';
 import { I18n } from '../../utils/languages';
 import { useAccountStateValue } from '../../atoms/account';
@@ -25,7 +25,10 @@ export const DetailRecipesScreen = () => {
   const { goBack, navigate } = useNavigation();
   const [love, setLove] = React.useState(false);
 
-  const recipes = useRequest(deleteRecipes, {
+  const _recipes = useRequest(deleteRecipes, {
+    manual: true,
+  });
+  const _love = useRequest(postLove, {
     manual: true,
   });
   const { data, loading } = useRequest(detailRecipes, {
@@ -38,6 +41,11 @@ export const DetailRecipesScreen = () => {
 
   const handleLove = () => {
     setLove(!love);
+    _love.run({
+      createAt: new Date(),
+      recipesId: data?.id,
+      userId: account?.id,
+    });
   };
 
   const handleEdit = () => {
@@ -45,7 +53,7 @@ export const DetailRecipesScreen = () => {
   };
 
   const onDelete = () => {
-    recipes.run({ id: route.params.id });
+    _recipes.run({ id: route.params.id });
   };
 
   const handleDelete = () => {
@@ -84,13 +92,15 @@ export const DetailRecipesScreen = () => {
               <TouchableOpacity style={styles.btnAction}>
                 <AntDesign name="sharealt" size={20} color="#CAD3DD" />
               </TouchableOpacity>
-              <TouchableOpacity onPress={handleLove}>
-                <AntDesign
-                  name="hearto"
-                  size={20}
-                  color={love ? 'red' : '#CAD3DD'}
-                />
-              </TouchableOpacity>
+              {account?.token ? (
+                <TouchableOpacity onPress={handleLove}>
+                  <AntDesign
+                    name="hearto"
+                    size={20}
+                    color={love ? 'red' : '#CAD3DD'}
+                  />
+                </TouchableOpacity>
+              ) : null}
             </View>
           </View>
           <View style={[styles.row, styles.aliCenter, styles.viewAvatar]}>

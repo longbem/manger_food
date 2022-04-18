@@ -136,3 +136,12 @@ function getMatch(a, b) {
   }
   return matches;
 }
+
+export const postLove = async data => {
+  try {
+    const response = await firestore().collection(LOVE_RECIPES).add(data);
+    console.log('response', response);
+  } catch (e) {
+    console.log('error', e);
+  }
+};

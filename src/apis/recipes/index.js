@@ -1,13 +1,67 @@
 import { request } from '../request';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
+import { utils } from '@react-native-firebase/app';
 
 const RECIPES = 'recipes';
 const LOVE_RECIPES = 'loveRecipes';
 
+const uploadImage = async ({ path, fileName }) => {
+  console.log('path, fileName', path.replace('file://', ''), fileName);
+  if (Object.keys(path).length == 0) return alert('Please Select any File');
+
+  const task = storage().ref(fileName).putFile(path.replace('file://', ''));
+
+  task.on('state_changed', taskSnapshot => {
+    console.log(
+      `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
+    );
+  });
+  try {
+    task
+      .then(() => {
+        console.log('Image uploaded to the bucket!');
+      })
+      .catch(err => {
+        console.log('err upload: ', err);
+      });
+  } catch (e) {
+    console.log('e upload image', e);
+  }
+  // let task = reference.putFile(path);
+  // console.log('task', task);
+  // task
+  //   .then(value => {
+  //     console.log('Image uploaded to the bucket!', value);
+  //     // this.setState({
+  //     //   isLoading: false,
+  //     //   status: 'Image uploaded successfully',
+  //     // });
+  //     return {
+  //       error: undefined,
+  //       data: {},
+  //     };
+  //   })
+  //   .catch(e => {
+  //     // status = 'Something went wrong';
+  //     console.log('uploading image error => ', e);
+  //     // this.setState({ isLoading: false, status: 'Something went wrong' });
+  //     return {
+  //       error: 'error upload',
+  //     };
+  //   });
+};
+
 export const postRecipes = async data => {
   try {
-    const response = await firestore().collection(RECIPES).add(data);
-    console.log('response', response);
+    console.log('data', data);
+    uploadImage({
+      path: data?.data.image,
+      fileName: data?.data.fileName,
+    });
+    // console.log('result', result);
+    // const response = await firestore().collection(RECIPES).add(data);
+    // console.log('response', response);
   } catch (e) {
     console.log('error: ', e);
   }

@@ -12,6 +12,7 @@
   "search": {
     "recipeSearch": "Tìm kiếm công thức",
     "enterTheNameOfTheDish": "Nhập món ăn cần tìm...",
+    "searchNoResult": "Không tìm thấy món ăn này.",
     "": ""
   },
   "account": {

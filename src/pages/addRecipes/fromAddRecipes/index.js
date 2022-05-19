@@ -17,6 +17,7 @@ import { I18n } from '../../../utils/languages';
 
 const paramsInfo = {
   image: '',
+  fileName: '',
   recipesName: '',
   category: '',
   difficulty: '',
@@ -41,10 +42,15 @@ export const FromAddRecipes = () => {
       console.log('response from add recipes', response);
     },
   });
-
+  //const _path = path.split('/').pop();
   const onSelectImage = async () => {
     const result = await launchImageLibrary();
-    setInfo({ ...info, image: result?.assets[0].uri });
+    console.log('result', result);
+    setInfo({
+      ...info,
+      image: result?.assets[0].uri,
+      fileName: result?.assets[0].fileName,
+    });
   };
 
   const onDeleteImage = () => {
@@ -56,7 +62,7 @@ export const FromAddRecipes = () => {
     info.userId = account?.id;
     info.userName = account?.username;
     console.log('info', info);
-    // recipes.run({ data: info });
+    recipes.run({ data: info });
     setTimeout(() => {
       setInfo(paramsInfo);
       setUpload(false);

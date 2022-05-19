@@ -14,7 +14,9 @@ const SearchEmpty = () => {
         source={require('../../assets/recipe-book.gif')}
         style={styles.imageEmpty}
       />
-      <Text style={styles.notFoundRecipes}>Không tìm thấy món ăn này.</Text>
+      <Text style={styles.notFoundRecipes}>
+        {I18n.t('search.searchNoResult')}
+      </Text>
     </View>
   );
 };

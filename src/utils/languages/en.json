@@ -13,6 +13,7 @@
   "search": {
     "recipeSearch": "Recipe search",
     "enterTheNameOfTheDish": "Enter the name of the dish...",
+    "searchNoResult": "Can't find this item.",
     "": ""
   },
   "account": {

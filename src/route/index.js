@@ -17,10 +17,13 @@ import { MyAccountScreen } from '../pages/myAccount';
 import { EditRecipesScreen } from '../pages/editRecipes';
 
 import { I18n } from '../utils/languages';
+import { useAccountState } from '../atoms/account';
 
 const Stack = createStackNavigator();
 
 const MainStack = () => {
+  const [account, setAccount] = useAccountState();
+  console.log('account', account);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -111,12 +114,12 @@ const MainStack = () => {
 
 export function AppContainer({ navigation }) {
   return (
-    <NavigationContainer>
-      <RecoilRoot>
+    <RecoilRoot>
+      <NavigationContainer>
         <NativeBaseProvider>
           <MainStack />
         </NativeBaseProvider>
-      </RecoilRoot>
-    </NavigationContainer>
+      </NavigationContainer>
+    </RecoilRoot>
   );
 }

@@ -22,7 +22,8 @@
     "guests": "Guests",
     "email": "Email",
     "update": "Update",
-    "updating": "Updating"
+    "updating": "Updating",
+    "client": "Customer"
   },
   "login": {
     "login": "Login",

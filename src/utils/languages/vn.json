@@ -21,7 +21,8 @@
     "guests": "Khách",
     "email": "Email",
     "update": "Cập nhật",
-    "updating": "Đang cập nhật"
+    "updating": "Đang cập nhật",
+    "client": "Khách mời"
   },
   "login": {
     "login": "Đăng nhập",

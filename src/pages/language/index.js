@@ -12,6 +12,7 @@ import FastImage from 'react-native-fast-image';
 import { stylesCommon } from '../../constants/stylesCommon';
 import { changeLanguage } from '../../utils/languages';
 import { I18n } from '../../utils/languages';
+import { useAccountState } from '../../atoms/account';
 
 const ItemAccount = ({ label, source, onPress }) => {
   return (
@@ -26,13 +27,14 @@ const ItemAccount = ({ label, source, onPress }) => {
 
 export const LanguageScreen = () => {
   const { goBack } = useNavigation();
+  const [account, setAccount] = useAccountState();
   const [loading, setLoading] = React.useState(false);
 
   const onSelectLanguage = languagesKey => {
     setLoading(true);
     changeLanguage(languagesKey);
     setTimeout(() => {
-      console.log('I18n', I18n.locale);
+      setAccount({ ...account });
       goBack();
       setLoading(false);
     }, 800);

@@ -82,8 +82,7 @@ export const AccountScreen = () => {
     setAccount({ ...account, token: null });
     // await AsyncStorage.setItem('login', null);
   };
-  console.log('I18n', I18n.locale);
-  console.log('account', account);
+
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.viewUser}>
@@ -92,7 +91,7 @@ export const AccountScreen = () => {
           source={{ uri: account?.avatar || avatarNull }}
         />
         <Text style={styles.guest}>
-          {account?.token ? account?.username : 'Khách mời'}
+          {account?.token ? account?.username : I18n.t('account.client')}
         </Text>
       </View>
       {menuAccount.map(item => {

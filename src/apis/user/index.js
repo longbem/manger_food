@@ -1,4 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
+import { getUrlImage } from '../recipes';
 
 const USER = 'users';
 
@@ -9,7 +11,7 @@ export const getUser = async () => {
     response.forEach(snapshot => {
       let data = snapshot.data();
       console.log('data', data);
-      // data.data.collectionId = snapshot.id;
+      data.collectionId = snapshot.id;
       listUser.push(data);
     });
     return listUser;
@@ -18,17 +20,53 @@ export const getUser = async () => {
   }
 };
 
-export const putUser = async ({ data }) => {
-  try {
-    const user = await getUser();
-  } catch (e) {
-    console.log('error', e);
-  }
-};
+export const updateUser = async data => {
+  if (Object.keys(data.avatar).length == 0)
+    return alert('Please Select any File');
 
-export const updateUser = async () => {
+  const task = storage()
+    .ref(data.fileName)
+    .putFile(data.avatar.replace('file://', ''));
+
+  task.on('state_changed', taskSnapshot => {
+    console.log(
+      `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
+    );
+  });
   try {
-    const user = await getUser();
+    task
+      .then(async () => {
+        console.log('Image uploaded to the bucket!');
+        const url = await getUrlImage(data.fileName);
+        if (url) {
+          firestore()
+            .collection(USER)
+            .doc(data.collectionId)
+            .update({
+              email: data.email,
+              avatar: url,
+            })
+            .then(() => {
+              return {
+                error: undefined,
+                status: 200,
+              };
+            })
+            .catch(() => {
+              return {
+                error: 'error upload',
+                status: 400,
+              };
+            });
+        }
+      })
+      .catch(err => {
+        console.log('err upload: ', err);
+        return {
+          error: 'error upload',
+          status: 400,
+        };
+      });
   } catch (e) {
     console.log('error', e);
   }

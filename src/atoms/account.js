@@ -8,9 +8,15 @@ import {
 const accountState = atom({
   key: 'ACCOUNT_STATE',
   default: {
-    username: '',
+    avatar: '',
+    createAt: '',
     email: '',
+    id: '',
+    password: '',
+    updateAt: '',
+    username: '',
     token: null,
+    fileName: '',
   },
 });
 

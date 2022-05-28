@@ -41,10 +41,6 @@ export const postRecipes = async data => {
               };
             });
         }
-        // return {
-        //   error: undefined,
-        //   status: 200,
-        // };
       })
       .catch(err => {
         console.log('err upload: ', err);
@@ -83,7 +79,7 @@ export const getRecipes = async () => {
   }
 };
 
-export const putRecipes = () => {
+export const updateRecipes = () => {
   return;
 };
 

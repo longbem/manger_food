@@ -7,6 +7,7 @@ import useRequest from '@ahooksjs/use-request';
 import { useAccountState } from '../../atoms/account';
 import { styles } from './styles';
 import { I18n } from '../../utils/languages';
+import { updateUser } from '../../apis/user';
 
 const paramsInfo = {
   avatar: '',
@@ -17,16 +18,21 @@ export const MyAccountScreen = () => {
   const [isUpload, setUpload] = React.useState(false);
   const [account, setAccount] = useAccountState();
 
-  // const recipes = useRequest(postRecipes, {
-  //   manual: true,
-  //   onSuccess: response => {
-  //     console.log('response from add recipes', response);
-  //   },
-  // });
+  const update = useRequest(updateUser, {
+    manual: true,
+    onSuccess: response => {
+      console.log('response from add recipes', response);
+    },
+  });
 
   const onSelectImage = async () => {
     const result = await launchImageLibrary();
-    setAccount({ ...account, avatar: result?.assets[0].uri });
+    console.log('result', result);
+    setAccount({
+      ...account,
+      avatar: result?.assets[0].uri,
+      fileName: result?.assets[0].fileName,
+    });
   };
 
   const onDeleteImage = () => {
@@ -35,9 +41,9 @@ export const MyAccountScreen = () => {
 
   const handleUpload = () => {
     setUpload(true);
-    // recipes.run({ data: info });
+    update.run(account);
     setTimeout(() => {
-      setAccount({});
+      setAccount({ ...account });
       setUpload(false);
     }, 2000);
   };
@@ -67,10 +73,15 @@ export const MyAccountScreen = () => {
           placeholder="Username"
           // onChangeText={text => setAccount({ ...account, username: text })}
           value={account?.username}
-          isDisabled={account?.username}
+          // isDisabled={account?.username}
         />
         <FormControl.Label mt="3">{I18n.t('account.email')}</FormControl.Label>
-        <Input placeholder="Email" value={account?.email} isDisabled={true} />
+        <Input
+          placeholder="Email"
+          value={account?.email}
+          isDisabled={account?.email}
+          onChangeText={text => setAccount({ ...account, email: text })}
+        />
       </FormControl>
       <Button
         mb="20"

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from 'react-native';
+import { Alert, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Input, FormControl, Select, Button, TextArea } from 'native-base';
 import { launchImageLibrary } from 'react-native-image-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -38,14 +32,24 @@ export const FromAddRecipes = () => {
 
   const recipes = useRequest(postRecipes, {
     manual: true,
-    onSuccess: response => {
-      console.log('response from add recipes', response);
+    onSuccess: res => {
+      console.log('response from add recipes', res);
+      if (res.status === 201) {
+        Alert.alert('About', `${res.message}`, [
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ]);
+      }
+      if (res.status === 200) {
+        setInfo(paramsInfo);
+      }
     },
   });
   //const _path = path.split('/').pop();
   const onSelectImage = async () => {
     const result = await launchImageLibrary();
-    console.log('result', result);
     setInfo({
       ...info,
       image: result?.assets[0].uri,
@@ -61,12 +65,9 @@ export const FromAddRecipes = () => {
     setUpload(true);
     info.userId = account?.id;
     info.userName = account?.username;
-    console.log('info', info);
-    recipes.run({ data: info });
     setTimeout(() => {
-      setInfo(paramsInfo);
+      recipes.run(info);
       setUpload(false);
-      console.log('info', info);
     }, 2000);
   };
 

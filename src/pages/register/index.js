@@ -49,7 +49,7 @@ export const RegisterScreen = () => {
     email: '',
     createAt: new Date(),
     updateAt: '',
-    id: 6,
+    id: Date.now(),
   });
 
   const handleRegister = async () => {

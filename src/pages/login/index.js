@@ -37,7 +37,7 @@ export const LoginScreen = () => {
         ]);
       }
       if (res.status === 200) {
-        setAccount({ ...account, token: 'token' });
+        setAccount({ ...res.data, token: 'token' });
         goBack();
       }
     },

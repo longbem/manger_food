@@ -8,10 +8,9 @@ import {
 const accountState = atom({
   key: 'ACCOUNT_STATE',
   default: {
-    username: 'Quang',
-    email: 'test@gmail.com',
+    username: '',
+    email: '',
     token: null,
-    id: 1,
   },
 });
 

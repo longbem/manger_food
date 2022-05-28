@@ -1,5 +1,10 @@
 import React from 'react';
-import { SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  SafeAreaView,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import { Input, Icon, Stack, Button } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -9,6 +14,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { stylesCommon } from '../../constants/stylesCommon';
 import { useAccountState } from '../../atoms/account';
 import { I18n } from '../../utils/languages';
+import { loginUser } from '../../apis/user';
+import useRequest from '@ahooksjs/use-request';
 
 export const LoginScreen = () => {
   const { goBack, navigate } = useNavigation();
@@ -18,13 +25,29 @@ export const LoginScreen = () => {
     show: false,
   });
 
+  const login = useRequest(loginUser, {
+    manual: true,
+    onSuccess: res => {
+      if (res.status === 201) {
+        Alert.alert('About', `${res.message}`, [
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ]);
+      }
+      if (res.status === 200) {
+        setAccount({ ...account, token: 'token' });
+        goBack();
+      }
+    },
+  });
+
   const handleLogin = async () => {
     setLogin(true);
     setTimeout(async () => {
-      await AsyncStorage.setItem('login', 'token');
-      setAccount({ ...account, token: 'token' });
+      login.run(account);
       setLogin(false);
-      goBack();
     }, 2000);
   };
 

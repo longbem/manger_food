@@ -53,26 +53,25 @@ export const RegisterScreen = () => {
   });
 
   const handleRegister = async () => {
-    // setLogin(true);
-    if (info.rePassword != info.password) {
-      Alert.alert('About', 'Mật khẩu phải trùng nhau', [
-        {
-          text: 'Cancel',
-          onPress: () => Alert.alert('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => {},
-        },
-      ]);
-    } else {
-      register.run(info);
-    }
-    // setTimeout(async () => {
-    //   setLogin(false);
-    //   goBack();
-    // }, 2000);
+    setLogin(true);
+    setTimeout(() => {
+      if (info.rePassword != info.password) {
+        Alert.alert('About', 'Mật khẩu phải trùng nhau', [
+          {
+            text: 'Cancel',
+            onPress: () => Alert.alert('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ]);
+      } else {
+        register.run(info);
+      }
+      setLogin(false);
+    }, 2000);
   };
 
   const isDisable = useMemo(() => {
@@ -80,10 +79,8 @@ export const RegisterScreen = () => {
     if (info.password === '' && info.username === '') {
       enable = true;
     }
-    console.log('enable', enable);
     return enable;
   }, [info.username, info.password]);
-  console.log('isDisable', isDisable);
   const handleShowPass = () => {
     setInfo({ ...info, show: !info.show });
   };

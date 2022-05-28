@@ -6,8 +6,11 @@ import { Search } from './search';
 import { SliderCategory } from './sliderCategory';
 import { ListNewestRecipes } from './listNewestRecipes';
 import { Category } from './subCategory';
+import { useAccountState } from '../../atoms/account';
 
 export const HomeScreen = () => {
+  const [account, setAccount] = useAccountState();
+  console.log('account', account);
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView>

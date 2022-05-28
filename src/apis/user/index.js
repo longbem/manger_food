@@ -36,19 +36,23 @@ export const updateUser = async () => {
 export const loginUser = async data => {
   try {
     const listUser = await getUser();
-    const user = await listUser.filter(item =>
-      console.log('adf', item.username == 'test003'),
+    const user = listUser.find(
+      item =>
+        `${item.username}`.toLocaleLowerCase() ===
+          `${data.username}`.toLocaleLowerCase() &&
+        `${item.password}`.toString() === `${data.password}`.toString(),
     );
-    if (user.length) {
-      await firestore().collection(USER).add(data);
+    console.log('user', user);
+    if (user) {
       return {
         status: 200,
-        message: 'Tạo tài khoản thành công',
+        message: undefined,
+        data: user,
       };
     } else {
       return {
         status: 201,
-        message: 'Tài khoản đã tồn tại',
+        message: 'Tài khoản hoặc mật khẩu không đúng',
       };
     }
   } catch (e) {
@@ -59,10 +63,12 @@ export const loginUser = async data => {
 export const registerUser = async data => {
   try {
     const listUser = await getUser();
-    const user = await listUser.filter(item =>
-      console.log('adf', item.username == data.username),
+    const user = await listUser.filter(
+      item =>
+        `${item.username}`.toLocaleLowerCase() ===
+        `${data.username}`.toLocaleLowerCase(),
     );
-    if (user.length == 0) {
+    if (user.length === 0) {
       await firestore().collection(USER).add(data);
       return {
         status: 200,

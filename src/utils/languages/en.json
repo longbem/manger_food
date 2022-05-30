@@ -52,6 +52,7 @@
     "cuisine": "Cuisine",
     "ingredients": "Ingredients",
     "steps": "Steps",
+    "comment": "Comment",
     "addComment": "Add comment",
     "addingComments": "Adding Comments",
     "uploadingRecipes": "Uploading Recipes",

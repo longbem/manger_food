@@ -5,9 +5,11 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import useRequest from '@ahooksjs/use-request';
 import { styles } from './styles';
-import { postRecipes } from '../../../apis/recipes';
+import { postRecipes, updateRecipe } from '../../../apis/recipes';
 import { useAccountStateValue } from '../../../atoms/account';
 import { I18n } from '../../../utils/languages';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRecipeState } from '../../../atoms/recipes';
 
 const paramsInfo = {
   image: '',
@@ -23,14 +25,17 @@ const paramsInfo = {
   userName: '',
   createAt: new Date(),
   updateAt: '',
+  comment: [],
 };
 
 export const FromAddRecipes = () => {
+  const route = useRoute();
+  const { goBack } = useNavigation();
   const account = useAccountStateValue();
+  const [recipe, setRecipe] = useRecipeState();
   const [isUpload, setUpload] = React.useState(false);
-  const [info, setInfo] = React.useState(paramsInfo);
 
-  const recipes = useRequest(postRecipes, {
+  const _addRecipes = useRequest(postRecipes, {
     manual: true,
     onSuccess: res => {
       console.log('response from add recipes', res);
@@ -43,49 +48,87 @@ export const FromAddRecipes = () => {
         ]);
       }
       if (res.status === 200) {
-        setInfo(paramsInfo);
+        setRecipe(paramsInfo);
+      }
+    },
+  });
+
+  const _updateRecipe = useRequest(updateRecipe, {
+    manual: true,
+    onSuccess: res => {
+      console.log('response from add recipes', res);
+      if (res.status === 201) {
+        Alert.alert('About', `${res.message}`, [
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ]);
+      }
+      if (res.status === 200) {
+        setRecipe(paramsInfo);
+        goBack();
       }
     },
   });
   //const _path = path.split('/').pop();
   const onSelectImage = async () => {
     const result = await launchImageLibrary();
-    setInfo({
-      ...info,
+    setRecipe({
+      ...recipe,
       image: result?.assets[0].uri,
       fileName: result?.assets[0].fileName,
     });
   };
 
   const onDeleteImage = () => {
-    setInfo({ ...info, image: '' });
+    setRecipe({ ...recipe, image: '' });
   };
 
   const handleUpload = () => {
     setUpload(true);
-    info.userId = account?.id;
-    info.userName = account?.username;
+    setRecipe({
+      ...recipe,
+      userId: account?.id,
+      userName: account?.username,
+      avatar: account?.avatar,
+    });
     setTimeout(() => {
-      recipes.run(info);
+      _addRecipes.run(recipe);
       setUpload(false);
     }, 2000);
   };
 
+  const handleEdit = () => {
+    setUpload(true);
+    console.log('recipe', recipe);
+    setTimeout(() => {
+      _updateRecipe.run({
+        data: recipe,
+        collectionId: route.params?.collectionId,
+      });
+      setUpload(false);
+    }, 2000);
+  };
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity
-        style={styles.viewImageAdd(info.image)}
-        onPress={onSelectImage}>
+        style={styles.viewImageAdd(recipe.image)}
+        onPress={onSelectImage}
+        disabled={!!recipe.image}>
         <Image
           source={
-            info.image
-              ? { uri: info.image }
+            recipe.image
+              ? { uri: recipe.image }
               : require('../../../assets/add-photo.png')
           }
           style={styles.image}
         />
-        {info.image ? (
-          <TouchableOpacity style={styles.close} onPress={onDeleteImage}>
+        {recipe.image ? (
+          <TouchableOpacity
+            style={styles.close}
+            onPress={onDeleteImage}
+            disabled={route.params?.edit}>
             <AntDesign name="close" size={20} />
           </TouchableOpacity>
         ) : null}
@@ -101,15 +144,17 @@ export const FromAddRecipes = () => {
         </FormControl.Label>
         <Input
           placeholder={I18n.t('recipes.nameRecipes')}
-          onChangeText={text => setInfo({ ...info, recipesName: text })}
+          onChangeText={text => setRecipe({ ...recipe, recipesName: text })}
+          value={recipe.recipesName}
         />
         <FormControl.Label mt="3">
           {I18n.t('recipes.difficulty')}
         </FormControl.Label>
         <Select
+          selectedValue={recipe.difficulty}
           accessibilityLabel={I18n.t('recipes.selectDifficulty')}
           placeholder={I18n.t('recipes.selectDifficulty')}
-          onValueChange={value => setInfo({ ...info, difficulty: value })}>
+          onValueChange={value => setRecipe({ ...recipe, difficulty: value })}>
           <Select.Item label="Dễ ràng" value="easy" />
           <Select.Item label="Trung bình" value="medium" />
           <Select.Item label="Khó" value="hard" />
@@ -118,9 +163,10 @@ export const FromAddRecipes = () => {
           {I18n.t('recipes.category')}
         </FormControl.Label>
         <Select
+          selectedValue={recipe.category}
           accessibilityLabel={I18n.t('recipes.category')}
           placeholder={I18n.t('recipes.selectCategory')}
-          onValueChange={value => setInfo({ ...info, category: value })}>
+          onValueChange={value => setRecipe({ ...recipe, category: value })}>
           <Select.Item label="Cơm" value="easy" />
           <Select.Item label="Đồ nướng" value="medium" />
           <Select.Item label="Lẩu" value="hard" />
@@ -129,9 +175,10 @@ export const FromAddRecipes = () => {
           {I18n.t('recipes.cuisine')}
         </FormControl.Label>
         <Select
+          selectedValue={recipe.cuisine}
           accessibilityLabel={I18n.t('recipes.cuisine')}
           placeholder={I18n.t('recipes.selectCuisine')}
-          onValueChange={value => setInfo({ ...info, cuisine: value })}>
+          onValueChange={value => setRecipe({ ...recipe, cuisine: value })}>
           <Select.Item label="Châu Á" value="chau_a" />
           <Select.Item label="Châu Âu" value="chau_au" />
           <Select.Item label="Châu Mỹ" value="chau_my" />
@@ -141,13 +188,15 @@ export const FromAddRecipes = () => {
         </FormControl.Label>
         <TextArea
           placeholder={I18n.t('recipes.ingredients')}
-          onChangeText={text => setInfo({ ...info, ingredients: text })}
+          onChangeText={text => setRecipe({ ...recipe, ingredients: text })}
+          value={recipe.ingredients}
         />
         <FormControl.Label mt="3">{I18n.t('recipes.steps')}</FormControl.Label>
         <TextArea
           placeholder={I18n.t('recipes.steps')}
           h={40}
-          onChangeText={text => setInfo({ ...info, steps: text })}
+          onChangeText={text => setRecipe({ ...recipe, steps: text })}
+          value={recipe.steps}
         />
         {/* <FormControl.Label mt="3">Website URL</FormControl.Label>
         <Input placeholder="Website URL" />
@@ -156,12 +205,14 @@ export const FromAddRecipes = () => {
       </FormControl>
       <Button
         mb="20"
-        onPress={handleUpload}
+        onPress={route.params?.edit ? handleEdit : handleUpload}
         leftIcon={<AntDesign name="clouduploado" size={20} color="#7BD8E8" />}
         isLoading={isUpload}
         variant="outline"
         isLoadingText={I18n.t('recipes.uploadingRecipes')}>
-        {I18n.t('recipes.uploadRecipes')}
+        {route.params?.edit
+          ? I18n.t('recipes.editRecipes')
+          : I18n.t('recipes.uploadRecipes')}
       </Button>
     </ScrollView>
   );

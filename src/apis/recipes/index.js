@@ -31,12 +31,14 @@ export const postRecipes = async data => {
             .then(() => {
               return {
                 error: undefined,
+                message: 'upload success',
                 status: 200,
               };
             })
             .catch(() => {
               return {
                 error: 'error upload',
+                message: 'upload error',
                 status: 400,
               };
             });
@@ -46,6 +48,7 @@ export const postRecipes = async data => {
         console.log('err upload: ', err);
         return {
           error: 'error upload',
+          message: 'upload error',
           status: 400,
         };
       });
@@ -79,8 +82,31 @@ export const getRecipes = async () => {
   }
 };
 
-export const updateRecipes = () => {
-  return;
+export const updateRecipe = async data => {
+  try {
+    firestore()
+      .collection(RECIPES)
+      .doc(data.collectionId)
+      .update(data.data)
+      .then(() => {
+        console.log('update success');
+        return {
+          status: 200,
+          message: 'update success',
+          error: undefined,
+        };
+      })
+      .catch(() => {
+        console.log('err comment: ');
+        return {
+          status: 201,
+          message: 'update error',
+          error: true,
+        };
+      });
+  } catch (e) {
+    console.log('err update recipe', e);
+  }
 };
 
 export const deleteRecipes = async ({ id }) => {
@@ -97,6 +123,13 @@ export const deleteRecipes = async ({ id }) => {
 export const detailRecipes = async ({ id }) => {
   try {
     const response = await firestore().collection(RECIPES).doc(id).get();
+    // let listUser = [];
+    // response.forEach(snapshot => {
+    //   let data = snapshot.data();
+    //   console.log('data', data);
+    //   data.collectionId = snapshot.id;
+    //   listUser.push(data);
+    // });
     return response.data();
   } catch (e) {
     console.log('error', e);
@@ -192,5 +225,24 @@ export const postLove = async data => {
     console.log('response', response);
   } catch (e) {
     console.log('error', e);
+  }
+};
+
+export const commentRecipe = async data => {
+  try {
+    firestore()
+      .collection(RECIPES)
+      .doc(data.collectionId)
+      .update({
+        comment: data.data.comment,
+      })
+      .then(() => {
+        console.log('comment success');
+      })
+      .catch(err => {
+        console.log('err comment: ', err);
+      });
+  } catch (e) {
+    console.log('err commentRecipe:', e);
   }
 };

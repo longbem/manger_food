@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  Image,
 } from 'react-native';
 import { Button } from 'native-base';
 import FastImage from 'react-native-fast-image';
@@ -14,16 +15,24 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import useRequest from '@ahooksjs/use-request';
 import { stylesCommon } from '../../constants/stylesCommon';
-import { detailRecipes, deleteRecipes, postLove } from '../../apis/recipes';
+import {
+  detailRecipes,
+  deleteRecipes,
+  postLove,
+  commentRecipe,
+} from '../../apis/recipes';
 import { imageNull, avatarNull } from '../../constants';
 import { I18n } from '../../utils/languages';
 import { useAccountStateValue } from '../../atoms/account';
+import { useRecipeState } from '../../atoms/recipes';
 
 export const DetailRecipesScreen = () => {
   const route = useRoute();
   const account = useAccountStateValue();
   const { goBack, navigate } = useNavigation();
   const [love, setLove] = React.useState(false);
+  const [comment, setComment] = React.useState('');
+  const [recipe, setRecipe] = useRecipeState();
 
   const _recipes = useRequest(deleteRecipes, {
     manual: true,
@@ -31,8 +40,15 @@ export const DetailRecipesScreen = () => {
   const _love = useRequest(postLove, {
     manual: true,
   });
-  const { data, loading } = useRequest(detailRecipes, {
+  const _comment = useRequest(commentRecipe, {
+    manual: true,
+  });
+
+  const { loading } = useRequest(detailRecipes, {
     defaultParams: [{ id: route.params.id }],
+    onSuccess: res => {
+      setRecipe(res);
+    },
   });
 
   const handleBack = () => {
@@ -43,13 +59,16 @@ export const DetailRecipesScreen = () => {
     setLove(!love);
     _love.run({
       createAt: new Date(),
-      recipesId: data?.id,
+      recipesId: recipe?.id,
       userId: account?.id,
     });
   };
 
   const handleEdit = () => {
-    navigate('editRecipesScreen');
+    navigate('editRecipesScreen', {
+      edit: true,
+      collectionId: route.params.id,
+    });
   };
 
   const onDelete = () => {
@@ -74,20 +93,38 @@ export const DetailRecipesScreen = () => {
     ]);
   };
 
+  const onComment = () => {
+    const listComment = [];
+    listComment.push({
+      content: comment,
+      userId: account.userId,
+      avatar: account.avatar,
+      username: account.username,
+    });
+    console.log('listComment', listComment);
+    setRecipe({ ...recipe, comment: [...listComment, ...recipe.comment] });
+    setTimeout(() => {
+      _comment.run({
+        collectionId: route.params.id,
+        data: recipe,
+      });
+    }, 1000);
+  };
+
   if (loading) {
     return <View />;
   }
-
+  console.log('recipe', recipe);
   return (
     <View style={{ flex: 1 }}>
       <ScrollView bounces={false}>
         <FastImage
-          source={{ uri: data?.image || imageNull }}
+          source={{ uri: recipe?.image || imageNull }}
           style={styles.image}
         />
         <View style={styles.viewContent}>
           <View style={[styles.row, styles.spaceBetween]}>
-            <Text style={styles.nameRecipes}>{data?.recipesName}</Text>
+            <Text style={styles.nameRecipes}>{recipe?.recipesName}</Text>
             <View style={styles.row}>
               <TouchableOpacity style={styles.btnAction}>
                 <AntDesign name="sharealt" size={20} color="#CAD3DD" />
@@ -105,17 +142,42 @@ export const DetailRecipesScreen = () => {
           </View>
           <View style={[styles.row, styles.aliCenter, styles.viewAvatar]}>
             <FastImage
-              source={{ uri: data?.image || avatarNull }}
+              source={{ uri: recipe?.image || avatarNull }}
               style={styles.avatar}
             />
-            <Text>{data?.userName}</Text>
+            <Text>{recipe?.userName}</Text>
           </View>
           <Text style={styles.commentLabel}>
             {I18n.t('recipes.ingredients')}:
           </Text>
-          <Text>{data?.ingredients}</Text>
+          <Text>{recipe?.ingredients}</Text>
           <Text style={styles.commentLabel}>{I18n.t('recipes.steps')}:</Text>
-          <Text>{data?.steps}</Text>
+          <Text>{recipe?.steps}</Text>
+
+          {recipe?.comment.length > 0 && (
+            <View style={{ marginVertical: 30 }}>
+              <Text
+                style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 18 }}>
+                {I18n.t('recipes.comment')}
+              </Text>
+              {recipe?.comment.map(item => {
+                return (
+                  <View style={{ flexDirection: 'row', marginVertical: 10 }}>
+                    <Image
+                      source={{ uri: item.avatar || avatarNull }}
+                      style={styles.avatar}
+                    />
+                    <View>
+                      <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>
+                        {item.username}
+                      </Text>
+                      <Text>{item.content}</Text>
+                    </View>
+                  </View>
+                );
+              })}
+            </View>
+          )}
           <Text style={styles.commentLabel}>
             {I18n.t('recipes.ingredients')}:
           </Text>
@@ -123,14 +185,16 @@ export const DetailRecipesScreen = () => {
             placeholder="Viết nhận xét của bạn...!"
             multiline
             style={styles.input}
+            onChangeText={text => setComment(text)}
           />
           <Button
+            onPress={onComment}
             mt="5"
             variant="outline"
             isLoadingText={I18n.t('recipes.addingComments')}>
             {I18n.t('recipes.addComment')}
           </Button>
-          {data?.userId == account?.id ? (
+          {recipe?.userId == account?.id ? (
             <View style={[styles.row, styles.spaceBetween]}>
               <Button
                 mt="5"

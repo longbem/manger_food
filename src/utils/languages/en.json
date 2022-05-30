@@ -61,7 +61,14 @@
     "selectCuisine": "Select Cuisine",
     "category": "Category",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "breakfast": "Break Fast",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "pasta": "Pasta",
+    "seafood": "Seafood",
+    "bake": "Bake",
+    "salads": "Salads"
   },
   "stack": {
     "add": "Add",

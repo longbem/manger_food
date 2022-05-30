@@ -10,7 +10,7 @@ import { avatarNull } from '../../../constants';
 export const HomeHeader = () => {
   const account = useAccountStateValue();
   const hours = dayjs().hour();
-  console.log(I18n.locale, 'dkm');
+
   return (
     <View style={[styles.row, styles.spaceBetween, styles.container]}>
       <View>
@@ -21,9 +21,9 @@ export const HomeHeader = () => {
             ? I18n.t('home.goodAfternoon')
             : I18n.t('home.goodEvening')}
         </Text>
-        {account?.token ? (
-          <Text style={styles.name}>{account?.username}</Text>
-        ) : null}
+        <Text style={styles.name}>
+          {account?.token ? account?.username : I18n.t('account.client')}
+        </Text>
       </View>
       <FastImage
         source={{ uri: account?.avatar || avatarNull }}

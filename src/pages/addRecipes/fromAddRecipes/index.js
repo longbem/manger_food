@@ -167,9 +167,13 @@ export const FromAddRecipes = () => {
           accessibilityLabel={I18n.t('recipes.category')}
           placeholder={I18n.t('recipes.selectCategory')}
           onValueChange={value => setRecipe({ ...recipe, category: value })}>
-          <Select.Item label="Cơm" value="easy" />
-          <Select.Item label="Đồ nướng" value="medium" />
-          <Select.Item label="Lẩu" value="hard" />
+          <Select.Item label="Bữa sáng" value="breakfast" />
+          <Select.Item label="Bữa trưa" value="lunch" />
+          <Select.Item label="Bữa tối" value="dinner" />
+          <Select.Item label="Mỳ ống" value="pasta" />
+          <Select.Item label="Hải sản" value="seafood" />
+          <Select.Item label="Nướng" value="bake" />
+          <Select.Item label="Salads" value="salads" />
         </Select>
         <FormControl.Label mt="3">
           {I18n.t('recipes.cuisine')}

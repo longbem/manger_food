@@ -8,31 +8,10 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { stylesCommon } from '../../constants/stylesCommon';
-import { useNavigation } from '@react-navigation/native';
-
-const data = [
-  {
-    id: 1,
-    nameRecipes: 'Cong thuc ABC',
-    username: 'Bem',
-    image:
-      'https://www.naturallygood.de/wp-content/uploads/2018/01/HirseSalat_3225.jpg',
-  },
-  {
-    id: 2,
-    nameRecipes: 'Cong thuc ABC',
-    username: 'Bem',
-    image:
-      'https://kienthucmoi.net/img/2021/07/22/cach-tang-suc-de-khang-151.jpg',
-  },
-  {
-    id: 3,
-    nameRecipes: 'Cong thuc ABC',
-    username: 'Bem',
-    image:
-      'https://kienthucmoi.net/img/2021/07/22/cach-tang-suc-de-khang-3.jpg',
-  },
-];
+import { useNavigation, useRoute } from '@react-navigation/native';
+import useRequest from '@ahooksjs/use-request';
+import { getRecipesByCategory } from '../../apis/recipes';
+import { I18n } from '../../utils/languages';
 
 const ItemNewestRecipes = ({ item }) => {
   const { navigate } = useNavigation();
@@ -48,10 +27,10 @@ const ItemNewestRecipes = ({ item }) => {
       onPress={onDetail}>
       <FastImage source={{ uri: item?.image }} style={styles.img} />
       <View>
-        <Text>{item?.nameRecipes}</Text>
+        <Text>{item?.recipesName}</Text>
         <View style={[styles.row, styles.aliCenter]}>
           <FastImage source={{ uri: item?.image }} style={styles.avatar} />
-          <Text>{item?.username}</Text>
+          <Text>{item?.userName}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -59,10 +38,31 @@ const ItemNewestRecipes = ({ item }) => {
 };
 
 export const DetailCategoryScreen = () => {
+  const route = useRoute();
+
+  const { data, loading } = useRequest(getRecipesByCategory, {
+    defaultParams: [{ category: route.params.category }],
+  });
+  if (loading) {
+    return <View />;
+  }
+
+  if (data?.length === 0) {
+    return (
+      <View style={styles.notResultContainer}>
+        <FastImage
+          source={require('../../assets/recipe-book.gif')}
+          style={styles.imgNotResult}
+        />
+        <Text style={styles.recipes}>{I18n.t('search.searchNoResult')}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={[styles.container]}>
       <ScrollView bounces={false}>
-        {data.map(item => (
+        {data?.map(item => (
           <ItemNewestRecipes key={item?.id} item={item} />
         ))}
       </ScrollView>
@@ -95,5 +95,15 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 20,
     marginRight: 5,
+  },
+  imgNotResult: {
+    width: 200,
+    height: 200,
+  },
+  notResultContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
   },
 });

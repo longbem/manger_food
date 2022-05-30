@@ -246,3 +246,15 @@ export const commentRecipe = async data => {
     console.log('err commentRecipe:', e);
   }
 };
+
+export const getRecipesByCategory = async ({ category }) => {
+  try {
+    const listRecipes = await getRecipes();
+    const listByCategory = listRecipes.filter(
+      item => item.category === category,
+    );
+    return listByCategory;
+  } catch (e) {
+    console.log('getRecipesByCategory err', e);
+  }
+};

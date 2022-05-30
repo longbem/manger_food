@@ -60,7 +60,14 @@
     "addComment": "Thêm nhận xét",
     "addingComments": "Đang thêm nhận xét",
     "edit": "Sửa",
-    "delete": "Xoá"
+    "delete": "Xoá",
+    "breakfast": "Bữa sáng",
+    "lunch": "Bữa trưa",
+    "dinner": "Bữa tối",
+    "pasta": "Mỳ ống",
+    "seafood": "Hải sản",
+    "bake": "Nướng",
+    "salads": "Salads"
   },
   "stack": {
     "add": "Thêm",

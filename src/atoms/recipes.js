@@ -8,6 +8,7 @@ import {
 const recipeState = atom({
   key: 'RECIPE_STATE',
   default: {
+    id: null,
     image: '',
     fileName: '',
     recipesName: '',

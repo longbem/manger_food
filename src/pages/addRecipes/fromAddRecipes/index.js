@@ -12,6 +12,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useRecipeState } from '../../../atoms/recipes';
 
 const paramsInfo = {
+  id: null,
   image: '',
   fileName: '',
   recipesName: '',
@@ -65,10 +66,6 @@ export const FromAddRecipes = () => {
           },
         ]);
       }
-      if (res.status === 200) {
-        setRecipe(paramsInfo);
-        goBack();
-      }
     },
   });
   //const _path = path.split('/').pop();
@@ -87,27 +84,32 @@ export const FromAddRecipes = () => {
 
   const handleUpload = () => {
     setUpload(true);
-    setRecipe({
+
+    const param = {
       ...recipe,
+      id: Date.now(),
       userId: account?.id,
       userName: account?.username,
       avatar: account?.avatar,
-    });
+    };
     setTimeout(() => {
-      _addRecipes.run(recipe);
+      _addRecipes.run(param);
       setUpload(false);
+      setRecipe(paramsInfo);
     }, 2000);
   };
 
   const handleEdit = () => {
     setUpload(true);
-    console.log('recipe', recipe);
+    // console.log('recipe', recipe);
     setTimeout(() => {
       _updateRecipe.run({
         data: recipe,
         collectionId: route.params?.collectionId,
       });
       setUpload(false);
+      setRecipe(paramsInfo);
+      goBack();
     }, 2000);
   };
   return (

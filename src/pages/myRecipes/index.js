@@ -34,7 +34,7 @@ const ItemNewestRecipes = ({ item }) => {
         <Text>{item?.recipesName}</Text>
         <View style={[styles.row, styles.aliCenter]}>
           <FastImage
-            source={{ uri: item?.image || avatarNull }}
+            source={{ uri: item?.avatar || avatarNull }}
             style={styles.avatar}
           />
           <Text>{item?.userName}</Text>

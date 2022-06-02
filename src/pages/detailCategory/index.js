@@ -17,7 +17,7 @@ const ItemNewestRecipes = ({ item }) => {
   const { navigate } = useNavigation();
 
   const onDetail = () => {
-    navigate('detailRecipesScreen', { id: item?.id, data: item });
+    navigate('detailRecipesScreen', { id: item?.collectionId, data: item });
   };
 
   return (

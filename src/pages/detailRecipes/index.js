@@ -47,6 +47,7 @@ export const DetailRecipesScreen = () => {
   const { loading } = useRequest(detailRecipes, {
     defaultParams: [{ id: route.params.id }],
     onSuccess: res => {
+      console.log('res', res);
       setRecipe(res);
     },
   });
@@ -111,10 +112,51 @@ export const DetailRecipesScreen = () => {
     }, 1000);
   };
 
+  const renderCategory = type => {
+    switch (type) {
+      case 'breakfast':
+        return 'Bữa sáng';
+      case 'lunch':
+        return 'Bữa trưa';
+      case 'dinner':
+        return 'Bữa tối';
+      case 'pasta':
+        return 'Mỳ ống';
+      case 'seafood':
+        return 'Hải sản';
+      case 'bake':
+        return 'Nướng';
+      default:
+        return 'Salads';
+    }
+  };
+
+  const renderDifficulty = type => {
+    switch (type) {
+      case 'easy':
+        return 'Dễ ràng';
+      case 'medium':
+        return 'Trung bình';
+      case 'hard':
+        return 'Khó';
+    }
+  };
+
+  const renderCuisine = type => {
+    switch (type) {
+      case 'chau_a':
+        return 'Châu Á';
+      case 'chau_au':
+        return 'Châu Âu';
+      case 'chau_my':
+        return 'Châu Mỹ';
+    }
+  };
+
   if (loading) {
     return <View />;
   }
-  console.log('recipe', recipe);
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView bounces={false}>
@@ -142,7 +184,7 @@ export const DetailRecipesScreen = () => {
           </View>
           <View style={[styles.row, styles.aliCenter, styles.viewAvatar]}>
             <FastImage
-              source={{ uri: recipe?.image || avatarNull }}
+              source={{ uri: recipe?.avatar || avatarNull }}
               style={styles.avatar}
             />
             <Text>{recipe?.userName}</Text>
@@ -151,6 +193,16 @@ export const DetailRecipesScreen = () => {
             {I18n.t('recipes.ingredients')}:
           </Text>
           <Text>{recipe?.ingredients}</Text>
+          <Text style={styles.commentLabel}>
+            {I18n.t('recipes.category')}: {renderCategory(recipe?.category)}
+          </Text>
+          <Text style={styles.commentLabel}>
+            {I18n.t('recipes.difficulty')}:{' '}
+            {renderDifficulty(recipe?.difficulty)}
+          </Text>
+          <Text style={styles.commentLabel}>
+            {I18n.t('recipes.cuisine')}: {renderCuisine(recipe?.cuisine)}
+          </Text>
           <Text style={styles.commentLabel}>{I18n.t('recipes.steps')}:</Text>
           <Text>{recipe?.steps}</Text>
 

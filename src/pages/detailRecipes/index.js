@@ -98,16 +98,18 @@ export const DetailRecipesScreen = () => {
     const listComment = [];
     listComment.push({
       content: comment,
-      userId: account.userId,
+      userId: account.id,
       avatar: account.avatar,
       username: account.username,
     });
-    console.log('listComment', listComment);
     setRecipe({ ...recipe, comment: [...listComment, ...recipe.comment] });
     setTimeout(() => {
       _comment.run({
         collectionId: route.params.id,
-        data: recipe,
+        data: {
+          ...recipe,
+          comment: [...listComment, ...recipe.comment],
+        },
       });
     }, 1000);
   };

@@ -69,7 +69,6 @@ export const getUrlImage = async url => {
 export const getRecipes = async () => {
   try {
     const response = await firestore().collection(RECIPES).get();
-    console.log('response getRecipes', response);
     let arrayRecipes = [];
     response.forEach(snapshot => {
       let data = snapshot.data();
@@ -126,7 +125,6 @@ export const detailRecipes = async ({ id }) => {
     // let listUser = [];
     // response.forEach(snapshot => {
     //   let data = snapshot.data();
-    //   console.log('data', data);
     //   data.collectionId = snapshot.id;
     //   listUser.push(data);
     // });
@@ -139,7 +137,7 @@ export const detailRecipes = async ({ id }) => {
 export const searchRecipes = async search => {
   console.log('search', search);
   const recipes = await getRecipes();
-  console.log('recipes', recipes);
+  // console.log('recipes', recipes);
   try {
     // const listRicepes = await getRecipes();
     // const search = listRicepes.map(item => {
@@ -221,8 +219,11 @@ function getMatch(a, b) {
 
 export const postLove = async data => {
   try {
-    const response = await firestore().collection(LOVE_RECIPES).add(data);
-    console.log('response', response);
+    firestore()
+      .collection(LOVE_RECIPES)
+      .add(data)
+      .then(() => console.log('success'))
+      .catch(() => console.log('err'));
   } catch (e) {
     console.log('error', e);
   }

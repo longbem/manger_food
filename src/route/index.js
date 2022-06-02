@@ -71,7 +71,7 @@ const MainStack = () => {
       <Stack.Screen
         name="detailCategoryScreen"
         component={DetailCategoryScreen}
-        options={({ route }) => ({ title: route.params.title })}
+        options={({ route }) => ({ title: I18n.t(route.params.title) })}
       />
       <Stack.Screen
         name="searchScreen"

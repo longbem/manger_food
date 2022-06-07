@@ -111,8 +111,6 @@ export const updateRecipe = async data => {
 export const deleteRecipes = async ({ id }) => {
   try {
     const response = await firestore().collection(RECIPES).doc(id).delete();
-    console.log('response', response);
-    // return response.data().data;
   } catch (e) {
     console.log('error', e);
   }
@@ -122,12 +120,6 @@ export const deleteRecipes = async ({ id }) => {
 export const detailRecipes = async ({ id }) => {
   try {
     const response = await firestore().collection(RECIPES).doc(id).get();
-    // let listUser = [];
-    // response.forEach(snapshot => {
-    //   let data = snapshot.data();
-    //   data.collectionId = snapshot.id;
-    //   listUser.push(data);
-    // });
     return response.data();
   } catch (e) {
     console.log('error', e);
@@ -135,37 +127,7 @@ export const detailRecipes = async ({ id }) => {
 };
 
 export const searchRecipes = async search => {
-  console.log('search', search);
-  const recipes = await getRecipes();
-  // console.log('recipes', recipes);
   try {
-    // const listRicepes = await getRecipes();
-    // const search = listRicepes.map(item => {
-    //   console.log('item', item.recipesName);
-    //   item.recipesName == search;
-    //   if (item.recipesName == search) {
-    //     return item;
-    //   }
-    // });
-    // console.log('search', search);
-    const resultSearch = [];
-    const response = await firestore()
-      .collection(RECIPES)
-      .orderBy('recipesName', 'asc')
-      .startAt(search)
-      .endAt(search + '\uf8ff')
-      .get();
-
-    console.log('response', response);
-    response.forEach(snapshot => {
-      console.log('snapshot', snapshot);
-      let data = snapshot.data();
-      console.log('data', data);
-      // data.data.collectionId = snapshot.id;
-      // resultSearch.push(data.data);
-    });
-    console.log('resultSearch', resultSearch);
-    // return response.data().data;
   } catch (e) {
     console.log('error', e);
   }

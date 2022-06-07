@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import useRequest from '@ahooksjs/use-request';
@@ -47,7 +48,11 @@ const ItemNewestRecipes = ({ item }) => {
 export const ListNewestRecipes = () => {
   const { data, loading } = useRequest(getRecipes);
   if (loading || data.length <= 0) {
-    return <View />;
+    return (
+      <View style={styles.containerLoading}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 
   return (

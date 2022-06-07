@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import useRequest from '@ahooksjs/use-request';
@@ -50,7 +51,11 @@ export const FavouriteRecipesScreen = () => {
     defaultParams: [{ idUser: account?.id }],
   });
   if (loading || data.length <= 0) {
-    return <View />;
+    return (
+      <View style={styles.containerLoading}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
   return (
     <View style={[styles.container]}>

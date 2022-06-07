@@ -13,4 +13,10 @@ export const stylesCommon = StyleSheet.create({
   aliCenter: {
     alignItems: 'center',
   },
+  containerLoading: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

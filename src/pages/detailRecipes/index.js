@@ -232,9 +232,7 @@ export const DetailRecipesScreen = () => {
               })}
             </View>
           )}
-          <Text style={styles.commentLabel}>
-            {I18n.t('recipes.ingredients')}:
-          </Text>
+          <Text style={styles.commentLabel}>{I18n.t('recipes.comment')}:</Text>
           <TextInput
             placeholder="Viết nhận xét của bạn...!"
             multiline

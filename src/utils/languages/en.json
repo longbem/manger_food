@@ -68,7 +68,8 @@
     "pasta": "Pasta",
     "seafood": "Seafood",
     "bake": "Bake",
-    "salads": "Salads"
+    "salads": "Salads",
+    "allRecipe": "All Recipes"
   },
   "stack": {
     "add": "Add",

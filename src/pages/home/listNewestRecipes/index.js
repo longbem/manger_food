@@ -15,7 +15,7 @@ import { getRecipes } from '../../../apis/recipes';
 import { imageNull, avatarNull } from '../../../constants';
 import { I18n } from '../../../utils/languages';
 
-const ItemNewestRecipes = ({ item }) => {
+export const ItemNewestRecipes = ({ item }) => {
   const { navigate } = useNavigation();
 
   const onDetail = () => {
@@ -46,6 +46,7 @@ const ItemNewestRecipes = ({ item }) => {
 };
 
 export const ListNewestRecipes = () => {
+  const { navigate } = useNavigation();
   const { data, loading } = useRequest(getRecipes);
   if (loading || data.length <= 0) {
     return (
@@ -59,14 +60,14 @@ export const ListNewestRecipes = () => {
     <View style={[styles.container]}>
       <View style={[styles.row, styles.spaceBetween]}>
         <Text style={styles.newestRecipes}>{I18n.t('home.latestRecipes')}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate('allListRecipeScreen')}>
           <Text style={styles.seeMore}>{I18n.t('home.seeAll')}</Text>
         </TouchableOpacity>
       </View>
       <ScrollView>
-        {data.map(item => (
-          <ItemNewestRecipes key={item?.id} item={item} />
-        ))}
+        {data.map((item, index) =>
+          index < 5 ? <ItemNewestRecipes key={item?.id} item={item} /> : null,
+        )}
       </ScrollView>
     </View>
   );

@@ -15,6 +15,7 @@ import { FavouriteRecipesScreen } from '../pages/favouriteRecipes';
 import { MyRecipesScreen } from '../pages/myRecipes';
 import { MyAccountScreen } from '../pages/myAccount';
 import { EditRecipesScreen } from '../pages/editRecipes';
+import { AllListRecipeScreen } from '../pages/allListRecipes';
 
 import { I18n } from '../utils/languages';
 import { useAccountState } from '../atoms/account';
@@ -78,6 +79,13 @@ const MainStack = () => {
         component={SearchScreen}
         options={{
           title: I18n.t('search.recipeSearch'),
+        }}
+      />
+      <Stack.Screen
+        name="allListRecipeScreen"
+        component={AllListRecipeScreen}
+        options={{
+          title: I18n.t('recipes.allRecipe'),
         }}
       />
       <Stack.Screen

@@ -18,7 +18,7 @@ export const HomeScreen = () => {
         <Search />
         <Category />
         <SliderCategory />
-        {/* <ListNewestRecipes /> */}
+        <ListNewestRecipes />
       </ScrollView>
     </SafeAreaView>
   );
